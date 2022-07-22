@@ -1,0 +1,7 @@
+cd <parent dir>/pdfTextExtractor_NEW
+
+==linux
+java -Xmx2448m -cp /home/dhanish/Desktop/pdtextcreater pdf.PDFTextExtractor /home/dhanish/Desktop/pdtextcreater/book.pdf
+
+==Windows
+java -Xmx1024m -cp ".;pdfbox-app-1.6.0.jar" pdf.PDFTextExtractor <pdf file> [start page] [end page]

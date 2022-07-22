@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Qualidex]" guice-stage="DEVELOPMENT" verbose="2">
+  <listeners>
+    <listener class-name="com.qualitestgroup.data_extract_demo.damoregroup.TestNGCustomReportListener"/>
+    <listener class-name="com.qualitestgroup.data_extract_demo.damoregroup.OnTestFailure"/>
+  </listeners>
+  <test thread-count="5" name="Qualidex Report(failed)" verbose="2">
+    <classes>
+      <class name="com.QualitestPortalPDFCompare.UnitTests">
+        <methods>
+          <include name="setup"/>
+          <include name="DataCompareTest"/>
+        </methods>
+      </class> <!-- com.QualitestPortalPDFCompare.UnitTests -->
+    </classes>
+  </test> <!-- Qualidex Report(failed) -->
+</suite> <!-- Failed suite [Qualidex] -->
