@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Qualidex" verbose="2" >
+	<listeners>
+		<listener
+			class-name="com.qualitestgroup.data_extract_demo.damoregroup.TestNGCustomReportListener" />
+		<listener
+			class-name="com.qualitestgroup.data_extract_demo.damoregroup.OnTestFailure" />
+	</listeners>
+	<test name="Qualidex Report">
+		<classes>
+			<class name="com.QualitestPortalPDFCompare.UnitTests">
+				<methods>									
+				
+							<include name="DataCompareTest"	/>
+							
+					   						 							
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite>
