@@ -27,7 +27,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,7 +39,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
-
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -53,9 +51,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.testng.Reporter;
-//import java.nio.charset.StandardCharsets;
-
 import com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
 
@@ -74,7 +69,6 @@ public class QualidexLibrary {
 	private final static Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
 	private static Workbook wb;
 	private static Sheet sh;
-	private static FileInputStream fis;
 	private static Cell value;
 	private static final String PdfToText = ".\\src\\test\\resources\\pdtxtoutputUTF8.txt";
 	private static String PdfPath;
@@ -136,6 +130,7 @@ public class QualidexLibrary {
 	 * @param fontSize  - font size
 	 * @return - Boolean True or False
 	 */
+	@SuppressWarnings("unused")
 	private static boolean setSection(String section, String fontStyle, int fontSize) {
 		return false;
 
@@ -166,6 +161,7 @@ public class QualidexLibrary {
 	 * 
 	 * @return cellValue
 	 */
+	@SuppressWarnings("unused")
 	private static String readCellValue(String excelSheetPath, String sheet, int cellNumber) {
 		String cellValue = null;
 		try {
@@ -177,7 +173,6 @@ public class QualidexLibrary {
 				value = (sh.getRow(i).getCell(cellNumber));
 				cellValue = value.toString();
 				logger.info(cellValue);
-				// System.out.println(cellValue);
 
 			}
 
@@ -268,7 +263,7 @@ public class QualidexLibrary {
 				if (cellValue.equals(filterCellValue)) {
 					value = (sh.getRow(i).getCell(cellNumber));
 					String cellValue1 = value.toString();
-					// System.out.println(cellValue1);
+
 					logger.info(cellValue1);
 
 					byte[] bytes = cellValue1.getBytes(StandardCharsets.UTF_8);
@@ -292,7 +287,6 @@ public class QualidexLibrary {
 		return validationCellValues;
 	}
 
-
 	/**
 	 * 
 	 * This method verifies the value in the Header
@@ -301,6 +295,7 @@ public class QualidexLibrary {
 	 * @param value - String value which is being verifie
 	 * @return Boolean True or False
 	 */
+	@SuppressWarnings("unused")
 	private static boolean existsInHeader(String value) {
 		boolean found = false;
 		try {
@@ -313,7 +308,6 @@ public class QualidexLibrary {
 			// there is character in a string
 			while ((st = br.readLine()) != null) {
 
-				// Footer coords "90, 108.45,"
 				String regexPattern = (headerCoords);
 				Pattern pattern = Pattern.compile(regexPattern);
 				Matcher matcher = pattern.matcher(st);
@@ -321,9 +315,6 @@ public class QualidexLibrary {
 				String result = value;
 
 				if (matcher.find()) {
-					// System.out.println("found the Header " + matcher.group() + " starting at
-					// index " + matcher.start()
-					// + " and ending at index " + matcher.end());
 
 					if (found = true) {
 						logger.info("Header is present");
@@ -348,9 +339,11 @@ public class QualidexLibrary {
 				found = false;
 
 			}
+			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return found;
 	}
 
@@ -362,7 +355,7 @@ public class QualidexLibrary {
 	 */
 
 	public static boolean findValuesInPdf(String value) {
-		
+
 		boolean result = false;
 		try {
 			File file1 = new File(PdfToText);
@@ -373,8 +366,6 @@ public class QualidexLibrary {
 
 			{
 				BufferedReader br = new BufferedReader(new FileReader(file1));
-
-				// Declaring a string variable
 
 				String st;
 				// Condition holds true till
@@ -395,7 +386,7 @@ public class QualidexLibrary {
 					logger.info("match not found");
 					result = false;
 				}
-
+				br.close();
 			}
 
 		} catch (Exception e) {
@@ -410,21 +401,19 @@ public class QualidexLibrary {
 	 * @param value - String value which is being verified
 	 * @return - Boolean True or False
 	 */
+	@SuppressWarnings("unused")
 	private static boolean existsInFooter(String value) {
 		boolean found = false;
 		try {
 			File file1 = new File(PdfToText);
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 
-			// Declaring a string variable
 			String st;
-			// Condition holds true till
-			// there is character in a string
+			// Condition holds true till there is character in a string
 			while ((st = br.readLine()) != null) {
 
-				// Footer coords "90, 108.45,"
 				String regexPattern = (footerCoords);
-				// String regexPattern = sc.nextLine();
+
 				Pattern pattern = Pattern.compile(regexPattern);
 				Matcher matcher = pattern.matcher(st);
 
@@ -453,6 +442,7 @@ public class QualidexLibrary {
 				}
 
 			}
+			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -465,6 +455,7 @@ public class QualidexLibrary {
 	 *
 	 * @return - Boolean True or False
 	 */
+	@SuppressWarnings("unused")
 	private static boolean isEmptyHeader() {
 		boolean found = false;
 		try {
@@ -472,20 +463,18 @@ public class QualidexLibrary {
 
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 
-			// Declaring a string variable
 			String st;
 			// Condition holds true till
 			// there is character in a string
 			while ((st = br.readLine()) != null) {
 
 				{
-					// Header coords "117,"
+
 					String regexPattern = (headerCoords);
-					// String regexPattern = sc.nextLine();
+
 					Pattern pattern = Pattern.compile(regexPattern);
 					Matcher matcher = pattern.matcher(st);
 
-					// while (matcher.find())
 					if (matcher.find()) {
 						found = true;
 						logger.info("Header is present");
@@ -505,9 +494,9 @@ public class QualidexLibrary {
 				logger.info(st);
 				logger.info("Header not found");
 				Asserter.validateTrue((st = br.readLine()) != null, "Header not found");
-				// Reporter.log("Header not found");
 
 			}
+			br.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -522,6 +511,7 @@ public class QualidexLibrary {
 	 * @return - Boolean True or False
 	 */
 
+	@SuppressWarnings("unused")
 	private static boolean isEmptyFooter() {
 		boolean found = false;
 		try {
@@ -530,25 +520,24 @@ public class QualidexLibrary {
 
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 
-			// Declaring a string variable
 			String st;
 			// Condition holds true till
 			// there is character in a string
 			while ((st = br.readLine()) != null) {
 
 				{
-					// Footer coords "90, 108.45,"
+
 					String regexPattern = (footerCoords);
-					// String regexPattern = sc.nextLine();
+
 					Pattern pattern = Pattern.compile(regexPattern);
 					Matcher matcher = pattern.matcher(st);
 
 					if (matcher.find()) {
 						found = true;
-						// Asserter.validateTrue((found=true),"Footer is present");
+
 						logger.info("Footer is present");
 						logger.info(st);
-						// Reporter.log("Footer is present");
+
 						break;
 
 					} else {
@@ -567,6 +556,7 @@ public class QualidexLibrary {
 				Asserter.validateTrue((st = br.readLine()) != null, "Footer not found");
 
 			}
+			br.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -586,7 +576,6 @@ public class QualidexLibrary {
 			PDDocument doc = PDDocument.load(new File(PDF));
 			count = doc.getNumberOfPages();
 			logger.info("Number of pages in Pdf :- " + count);
-			Reporter.log("Number of pages in Pdf :- " + count);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -608,10 +597,9 @@ public class QualidexLibrary {
 					"cmd /c start /wait java -Xmx2448m -cp  . pdf.PDFTextExtractor " + PdfPath, null,
 					new File(".\\pdtextcreater"));
 			process.waitFor();
-			
+
 			File file = new File(".\\src\\test\\resources");
 			file.mkdir();
-			//file.createNewFile();
 
 			TextUTF16LEToTextUTF8("C:\\PDF\\pdtxtoutput.txt");
 
@@ -657,7 +645,7 @@ public class QualidexLibrary {
 	 * 
 	 * @param value - Text which is being validated
 	 * 
-	 * @return count
+	 * @return count of string in PDF
 	 */
 	@SuppressWarnings("resource")
 	public static int findOccurence(String value) {
@@ -667,12 +655,9 @@ public class QualidexLibrary {
 			File file1 = new File(PdfToText);
 
 			logger.info("Validation text is : " + value);
-			// Reporter.log("Validation text is : " + value);
 
 			{
 				BufferedReader br = new BufferedReader(new FileReader(file1));
-
-				// Declaring a string variable
 
 				String st;
 
@@ -693,10 +678,10 @@ public class QualidexLibrary {
 				if (count > 0) {
 
 					logger.info("Validated text " + value + " appears " + count + " times in a PDF");
-					// Reporter.log("Validated text " + value + " appears " + count + " times");
+
 				} else {
 					logger.info("Text" + value + " not found in PDF");
-					// Reporter.log("Text not found");
+
 				}
 			}
 
@@ -717,6 +702,7 @@ public class QualidexLibrary {
 	 * @param tableName  - Table name
 	 * @param CoulmnName - Column name
 	 */
+
 	@SuppressWarnings("unused")
 	private static void readFromDB(String url, String userName, String password, String tableName, String CoulmnName) {
 
@@ -725,19 +711,13 @@ public class QualidexLibrary {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
 			while (rs.next()) {
-				String content = rs.getString(CoulmnName);
-				logger.info(content);
-				Files.write(Paths.get(".\\src\\test\\resources\\ExcelToText.txt"), Arrays.asList(content),
-						StandardCharsets.UTF_8);
+				// This method is not implemented
 			}
 		}
 
 		catch (SQLException ex) {
 			logger.info(ex.getMessage());
 			ex.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -748,7 +728,7 @@ public class QualidexLibrary {
 	 * @return - Boolean True or False
 	 */
 
-	public static boolean isTextPresentInPdf(String PDFPath) {
+	public static boolean isPdfEmpty(String PDFPath) {
 		boolean found = false;
 		try {
 			// Fetch the PDF
@@ -777,6 +757,7 @@ public class QualidexLibrary {
 	 * @param refTable - Path of reference table
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private static boolean findTable(String PDFPath, String refTable) {
 		// This method is not implimented
 		return false;
@@ -899,7 +880,7 @@ public class QualidexLibrary {
 	private static boolean processImage(File imageFiles, String refImage) throws IOException {
 		boolean result = false;
 		String file1 = refImage;
-		// String file1 = "C:\\Users\\pavan.kumar\\Downloads\\Paid_Java_libreary_2.png";
+
 		String file2 = imageFiles.toString();
 
 		Image image1 = Toolkit.getDefaultToolkit().getImage(file1);
@@ -948,12 +929,9 @@ public class QualidexLibrary {
 		try {
 			File file1 = new File(PdfToText);
 			logger.info("Validation text is : " + value);
-			// Reporter.log("Validation text is : " + value);
 
 			{
 				BufferedReader br = new BufferedReader(new FileReader(file1));
-
-				// Declaring a string variable
 
 				String st;
 				// Condition holds true till
@@ -961,7 +939,7 @@ public class QualidexLibrary {
 				while ((st = br.readLine()) != null) {
 
 					String regexPattern = value;
-					// String regexPattern = sc.nextLine();
+
 					Pattern pattern = Pattern.compile(regexPattern);
 					Matcher matcher = pattern.matcher(st);
 
@@ -981,11 +959,9 @@ public class QualidexLibrary {
 				if ((st = br.readLine()) == null) {
 					found = false;
 					logger.info("match not found");
-					/* Asserter.validateTrue((st = br.readLine()) != null); */
-					//Reporter.log("match not found");
 
 				}
-
+				br.close();
 			}
 
 		} catch (Exception e) {
@@ -1021,9 +997,6 @@ public class QualidexLibrary {
 					byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
 					String decodedFile = new String(bytes);
 
-					// BufferedReader decodedBr = new BufferedReader(new FileReader(decodedFile));
-
-					// stringLine = decodedBr.readLine();
 					stringLine = decodedFile;
 
 					if (st.contains(stringLine)) {
@@ -1042,15 +1015,9 @@ public class QualidexLibrary {
 
 							if (fontSizeMatcher.find()) {
 
-								// Display in console
-								logger.info("Validation text is : " + stringLine);
-								// Display in report
-								// Reporter.log("Validation text is : " + stringLine);
-
 								logger.info(st);
 								logger.info("Validation text " + stringLine + " is found with a expected format");
-								// Reporter.log("Validation text "+ stringLine + " is found with a expected
-								// format");
+
 								found = true;
 								break;
 							}
@@ -1066,13 +1033,11 @@ public class QualidexLibrary {
 			}
 			if ((st = extractedBr.readLine()) == null) {
 
-				// Display in report
-				// Reporter.log("Validation text is : " + stringLine);
-
 				logger.info(stringLine + ": text isn't found in the expected format");
 
 				found = false;
 			}
+			extractedBr.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1080,20 +1045,20 @@ public class QualidexLibrary {
 		return found;
 
 	}
-	
-   /**
-    * This method helps highlight the PDF file differences
-    * 
-    * @param basePDF : base PDF file path
-    * @param refPDF  : refernce PDF file path
-    * @param diff : difference between two PDF files
-    * @param toBeRemoved : removed content from reference PDF
-    * @param newlyAdded : newly added content in reference PDF
-    * @return 
-    */
 
-	private static String qualiDexCompare(String basePDF, String refPDF, Map<String, String> diff, List<String> toBeRemoved,
-			List<String> newlyAdded) {
+	/**
+	 * This method helps highlight the PDF file differences
+	 * 
+	 * @param basePDF     : base PDF file path
+	 * @param refPDF      : refernce PDF file path
+	 * @param diff        : difference between two PDF files
+	 * @param toBeRemoved : removed content from reference PDF
+	 * @param newlyAdded  : newly added content in reference PDF
+	 * @return
+	 */
+
+	private static String qualiDexCompare(String basePDF, String refPDF, Map<String, String> diff,
+			List<String> toBeRemoved, List<String> newlyAdded) {
 		try {
 			String PDFText1 = PDF_Extractor(basePDF);
 			String PDFText2 = PDF_Extractor(refPDF);
@@ -1113,15 +1078,10 @@ public class QualidexLibrary {
 				System.out.println("File exists");
 			}
 
-			// List<String> toBeRemoved = Arrays.asList("Hello", "World!", "How", "Are",
-			// "You");
-			// List<String> newlyAdded = Arrays.asList("ada", "asd!", "123", "asd", "asd");
 			HashMap<String, String> diffString = new HashMap<String, String>();
 			diffString.put("", "");
 
 			diff_match_patch dmp = new diff_match_patch();
-
-			//LinkedList<diff_match_patch.Diff> diff1 = dmp.diff_main(PDFText1, PDFText1);
 
 			LinkedList<diff_match_patch.Diff> diff2 = dmp.diff_main(PDFText1, PDFText2);
 
@@ -1157,7 +1117,7 @@ public class QualidexLibrary {
 								regexForSplit = regexForSplit + ")";
 								loopCount++;
 							}
-							
+
 						}
 						if (loopCount > 0) {
 							String[] splitValue = textInEarlierDiff.split(regexForSplit);
@@ -1176,10 +1136,7 @@ public class QualidexLibrary {
 							diffFinalRepor.add(new Diff(Operation.DELETE, textInEarlierDiff));
 						}
 					}
-					
-				
-					
-				
+
 					diffFinalRepor.add(f);
 					earlierDiffState = "EQUAL";
 
@@ -1187,20 +1144,18 @@ public class QualidexLibrary {
 
 				// We assume we will not have 2 delete in sequence after diff_cleanupEfficiency
 				// we also assume a string replace will always have Delete, Insert and not
-				// Inster, Delte
+				// Insert, Delete
 
 				else if (b.contains("DELETE")) {
 					System.out.println(" ");
-					//diffFinalRepor.add(f);
+
 					earlierDiffState = "DELETE";
-					
+
 				} else if (b.contains("INSERT")) {
 					String regexForSplit = "(";
 					String regexForSplitModified = "(";
 					if (earlierDiffState.equals("EQUAL")) {
-						// if (earlierDiffState.equals("EQUAL")){
-						// in this case it means string is inserted
-						
+
 						int loopCount = 0;
 						for (String s : newlyAdded) {
 
@@ -1213,7 +1168,7 @@ public class QualidexLibrary {
 								regexForSplit = regexForSplit + ")";
 								loopCount++;
 							}
-							
+
 						}
 						if (loopCount > 0) {
 							String[] splitValue = f.text.split(regexForSplit);
@@ -1226,75 +1181,70 @@ public class QualidexLibrary {
 
 								}
 							}
-						}else {
-							//diffFinalRepor.add(f);
+						} else {
+
 							diffFinalRepor.add(new Diff(Operation.INSERT, f.text));
 						}
 
-						
-					} 
-					else if (earlierDiffState.equals("DELETE")) {
-						
-						// code - PAVAN
-
+					} else if (earlierDiffState.equals("DELETE")) {
 
 						// in this case it means string is deleted
-						if(diff==null ||diff.isEmpty()) {
+						if (diff == null || diff.isEmpty()) {
 							diffFinalRepor.add(new Diff(Operation.DELETE, textInEarlierDiff));
 							diffFinalRepor.add(f);
-						}
-						else {
-						
-						List<String> baseString= new ArrayList<String>();
-						Set<String> keys = diff.keySet();
-						
-						for (String k : keys) { baseString.add(k);   System.out.println("key: " + k);}
-						
-						int loopCount = 0;
-						for (String s : baseString) {
+						} else {
 
-							if (textInEarlierDiff.contains(s)) {
-								
-								if(f.text.contains(diff.get(s))) {
-								
-								if (loopCount > 0) {
-									regexForSplit = regexForSplit + "|(";
-									
-									
-									regexForSplitModified= regexForSplitModified + "|(";
-								}
-								regexForSplit = regexForSplit + "(?<=" + s + ")|(?=" + s + "))";
-								regexForSplitModified = regexForSplitModified + "(?<=" + diff.get(s) + ")|(?=" + diff.get(s) + "))";
-								loopCount++;
-								}
+							List<String> baseString = new ArrayList<String>();
+							Set<String> keys = diff.keySet();
+
+							for (String k : keys) {
+								baseString.add(k);
+								System.out.println("key: " + k);
 							}
-							
-						}
-						if (loopCount > 0) {
-							String[] baseValue = textInEarlierDiff.split(regexForSplit);
-							String[] modifiedValue = f.text.split(regexForSplitModified);
-							int q=0;
-							for (String s : baseValue) {
-								if (baseString.contains(s)) {
-									diffFinalRepor.add(new Diff(Operation.EQUAL, diff.get(s)));
 
-								} 
-								else {
-									
-									diffFinalRepor.add(new Diff(Operation.DELETE, s));
-									diffFinalRepor.add(new Diff(Operation.INSERT, modifiedValue[q]));
-									
+							int loopCount = 0;
+							for (String s : baseString) {
 
+								if (textInEarlierDiff.contains(s)) {
 
+									if (f.text.contains(diff.get(s))) {
+
+										if (loopCount > 0) {
+											regexForSplit = regexForSplit + "|(";
+
+											regexForSplitModified = regexForSplitModified + "|(";
+										}
+										regexForSplit = regexForSplit + "(?<=" + s + ")|(?=" + s + "))";
+										regexForSplitModified = regexForSplitModified + "(?<=" + diff.get(s) + ")|(?="
+												+ diff.get(s) + "))";
+										loopCount++;
+									}
 								}
-								q++;
-							}
-						}else {
 
-						diffFinalRepor.add(new Diff(Operation.DELETE, textInEarlierDiff));
-						diffFinalRepor.add(f);
+							}
+							if (loopCount > 0) {
+								String[] baseValue = textInEarlierDiff.split(regexForSplit);
+								String[] modifiedValue = f.text.split(regexForSplitModified);
+								int q = 0;
+								for (String s : baseValue) {
+									if (baseString.contains(s)) {
+										diffFinalRepor.add(new Diff(Operation.EQUAL, diff.get(s)));
+
+									} else {
+
+										diffFinalRepor.add(new Diff(Operation.DELETE, s));
+										diffFinalRepor.add(new Diff(Operation.INSERT, modifiedValue[q]));
+
+									}
+									q++;
+								}
+							} else {
+
+								diffFinalRepor.add(new Diff(Operation.DELETE, textInEarlierDiff));
+								diffFinalRepor.add(f);
+							}
 						}
-					}}
+					}
 					System.out.println(" ");
 					earlierDiffState = "INSERT";
 				}
@@ -1304,23 +1254,15 @@ public class QualidexLibrary {
 			if (earlierDiffState.equals("DELETE")) {
 				diffFinalRepor.add(new Diff(Operation.DELETE, textInEarlierDiff));
 			}
-			// String result = dmp.diff_prettyHtml(diff1);
 
-			String result = dmp.diff_prettyHtml(diffFinalRepor).replaceAll("¶", "");
-
-			//String result = dmp.diff_prettyHtml(diff2);
-			//String result2 = dmp.diff_prettyHtml(diff1);
-
-			//Path path1 = Paths.get(".\\source.html");
+			String result = dmp.diff_prettyHtml(diffFinalRepor);
 
 			Path path = Paths.get(".\\Difference.html");
 
-			// Try block to check for exceptions
 			try {
 				// Now calling Files.writeString() method
 				// with path , content & standard charsets
-				//Files.writeString(path1, result2, StandardCharsets.UTF_8);
-				Files.writeString(path, result.replaceAll("&para;",""), StandardCharsets.UTF_8);
+				Files.writeString(path, result.replaceAll("&para;", ""), StandardCharsets.UTF_8);
 
 			}
 
@@ -1330,16 +1272,11 @@ public class QualidexLibrary {
 				// invalid. directory local path is passed
 				System.out.print("Invalid Path");
 			}
-			//
-			//File f2 = new File("source.html");
 
 			File f = new File("Difference.html");
 
 			// Display PDF difference in HTML format
 			Desktop.getDesktop().browse(f.toURI());
-
-			// AppTest.PDF_Diff(diff1);
-			// AppTest.PDF_Diff(diff2);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -1348,18 +1285,50 @@ public class QualidexLibrary {
 		return null;
 
 	}
-	
-	public static String qualiDexCompares(String basePDF, String refPDF, Map<String, String> diff, List<String> toBeRemoved,List<String> newlyAdded) {
+
+	/**
+	 * This method highlights Pdf differences by ignoring expected deleted strings ,
+	 * newly inserted strings and modified strings in ref. PDF
+	 * 
+	 * @param basePDF     Base PDF file path
+	 * @param refPDF      ref. PDF file path
+	 * @param diff        modified strings of comparison between base PDF vs ref.
+	 *                    PDF
+	 * @param toBeRemoved deleted strings in ref. PDF
+	 * @param newlyAdded  newly inserted strings in base PDF
+	 * @return returns PDF comparison
+	 */
+
+	public static String qualiDexCompares(String basePDF, String refPDF, Map<String, String> diff,
+			List<String> toBeRemoved, List<String> newlyAdded) {
 		return qualiDexCompare(basePDF, refPDF, diff, toBeRemoved, newlyAdded);
 	}
-   
+
+	/**
+	 * This method highlights Pdf differences by comparing base PDF vs Ref PDF
+	 * 
+	 * @param basePDF Base PDF file path
+	 * @param refPDF  ref. PDF file path
+	 * @return returns PDF comparison
+	 */
+
 	public static String qualiDexCompares(String basePDF, String refPDF) {
 		List<String> deletedStrings = Arrays.asList("");
 		List<String> newlyAdded = Arrays.asList("");
-	    Map<String, String> diff =new HashMap<>();
+		Map<String, String> diff = new HashMap<>();
 		return qualiDexCompare(basePDF, refPDF, diff, deletedStrings, newlyAdded);
 
 	}
+
+	/**
+	 * This method highlights Pdf differences by ignoring expected modified Strings
+	 * in ref PDF
+	 * 
+	 * @param basePDF Base PDF file path
+	 * @param refPDF  ref. PDF file path
+	 * @param diff    modified strings of comparison between base PDF vs ref. PDF
+	 * @return returns PDF comparison
+	 */
 
 	public static String qualiDexCompares(String basePDF, String refPDF, Map<String, String> diff) {
 		List<String> deletedStrings = Arrays.asList("");
@@ -1368,17 +1337,46 @@ public class QualidexLibrary {
 
 	}
 
+	/**
+	 * This method highlights Pdf differences by ignoring expected newly inserted
+	 * strings in ref PDF
+	 * 
+	 * @param basePDF    Base PDF file path
+	 * @param refPDF     ref. PDF file path
+	 * @param newlyAdded newly inserted strings in base PDF
+	 * @return returns PDF comparison
+	 */
+
 	public static String qualiDexCompares(String basePDF, String refPDF, List<String> newlyAdded) {
 		List<String> deletedStrings = Arrays.asList("");
-		 Map<String, String> diff =new HashMap<>();
+		Map<String, String> diff = new HashMap<>();
 		return qualiDexCompare(basePDF, refPDF, diff, deletedStrings, newlyAdded);
 	}
 
+	/**
+	 * This method highlights Pdf differences by ignoring expected deleted and newly
+	 * inserted strings in ref PDF
+	 * 
+	 * @param basePDF     Base PDF file path
+	 * @param refPDF      ref. PDF file path
+	 * @param toBeRemoved deleted strings in ref. PDF
+	 * @param newlyAdded  newly inserted strings in base PDF
+	 * @return returns PDF comparison
+	 */
+
 	public static String qualiDexCompares(String basePDF, String refPDF, List<String> toBeRemoved,
 			List<String> newlyAdded) {
-		Map<String, String> diff =new HashMap<>();
+		Map<String, String> diff = new HashMap<>();
 		return qualiDexCompare(basePDF, refPDF, diff, toBeRemoved, newlyAdded);
 	}
+
+	/**
+	 * This method extracts PDF content
+	 * 
+	 * @param PDF Pdf file
+	 * @return extracted Pdf Texts
+	 * @throws IOException
+	 */
 
 	private static String PDF_Extractor(String PDF) throws IOException {
 		File pdf_file = new File(PDF);

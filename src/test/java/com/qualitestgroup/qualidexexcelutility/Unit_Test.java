@@ -34,7 +34,7 @@ public class Unit_Test {
 		// logger.info("Check is PDF consits of text")
 		try {
 			Reporter.log("Check is PDF consits of text");
-			if (QualidexLibrary.isTextPresentInPdf(PDF2)) {
+			if (QualidexLibrary.isPdfEmpty(PDF2)) {
 				Reporter.log("Pdf consits of text");
 			} else {
 				Reporter.log("Pdf doesn't consits of text");
