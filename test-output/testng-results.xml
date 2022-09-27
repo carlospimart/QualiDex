@@ -1,17 +1,783 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="4" passed="2" failed="2" skipped="0">
   <reporter-output>
+    <line>
+      <![CDATA[Check is PDF consits of text]]>
+    </line>
+    <line>
+      <![CDATA[Pdf consits of text]]>
+    </line>
+    <line>
+      <![CDATA[Check number of pages in PDF]]>
+    </line>
+    <line>
+      <![CDATA[Set PDF and extract content]]>
+    </line>
+    <line>
+      <![CDATA[PDF contentent extracted successfully]]>
+    </line>
+    <line>
+      <![CDATA[Finding image in PDF]]>
+    </line>
+    <line>
+      <![CDATA[Image found in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[ Find the occurence of text : Versicherung]]>
+    </line>
+    <line>
+      <![CDATA[Versicherung text found 36 times in a PDF]]>
+    </line>
+    <line>
+      <![CDATA[ Find the text Angebot is in proper format]]>
+    </line>
+    <line>
+      <![CDATA[Angebot text is in format]]>
+    </line>
+    <line>
+      <![CDATA[Set Excel location]]>
+    </line>
+    <line>
+      <![CDATA[Excel location has been set and start finding excel data in PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : A 100% open rate, 98% read rate and 90% response]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: A 100% open rate, 98% read rate and 90% response is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[A 100% open rate, 98% read rate and 90% response is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test Invalid content]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test Invalid content is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Subscribers List, Growth of Subscribers,]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Subscribers List, Growth of Subscribers, is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Subscribers List, Growth of Subscribers, is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Business Situation:]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Business Situation: is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Business Situation: is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test invalid content2]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test invalid content2 is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test invalid content2 is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Screenshots:]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Screenshots: is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Screenshots: is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test Invalid content 3]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen]]>
+    </line>
+    <line>
+      <![CDATA[Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen is present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG]]>
+    </line>
+    <line>
+      <![CDATA[Modellrechnung nach Â§ 154 VVG is present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Modellrechnung]]>
+    </line>
+    <line>
+      <![CDATA[Modellrechnung is present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei ]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test Invalid content 3]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Set Excel location]]>
+    </line>
+    <line>
+      <![CDATA[Excel location has been set and start finding excel data in PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test Invalid content]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test Invalid content is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test invalid content2]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test invalid content2 is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test invalid content2 is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test Invalid content 3]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen]]>
+    </line>
+    <line>
+      <![CDATA[Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen is present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG]]>
+    </line>
+    <line>
+      <![CDATA[Modellrechnung nach Â§ 154 VVG is present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei ]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[Validation Text : Test Invalid content 3]]>
+    </line>
+    <line>
+      <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+    </line>
   </reporter-output>
-  <suite started-at="2022-09-23T08:56:05Z" name="Default suite" finished-at="2022-09-23T08:56:08Z" duration-ms="2293">
+  <suite started-at="2022-09-27T11:07:25Z" name="Qualidex" finished-at="2022-09-27T11:07:35Z" duration-ms="10009">
     <groups>
     </groups>
-    <test started-at="2022-09-23T08:56:05Z" name="Default test" finished-at="2022-09-23T08:56:08Z" duration-ms="2293">
-      <class name="test.QDJarTes.PDFTest">
-        <test-method signature="test()[pri:0, instance:test.QDJarTes.PDFTest@135606db]" started-at="2022-09-23T08:56:05Z" name="test" finished-at="2022-09-23T08:56:08Z" duration-ms="2262" status="PASS">
+    <test started-at="2022-09-27T11:07:25Z" name="Qualidex Report" finished-at="2022-09-27T11:07:35Z" duration-ms="10009">
+      <class name="com.qualitestgroup.qualidexexcelutility.Unit_Test">
+        <test-method is-config="true" signature="initialConfig()[pri:0, instance:com.qualitestgroup.qualidexexcelutility.Unit_Test@26275bef]" started-at="2022-09-27T11:07:25Z" name="initialConfig" finished-at="2022-09-27T11:07:32Z" duration-ms="7232" status="PASS">
           <reporter-output>
+            <line>
+              <![CDATA[Check is PDF consits of text]]>
+            </line>
+            <line>
+              <![CDATA[Pdf consits of text]]>
+            </line>
+            <line>
+              <![CDATA[Check number of pages in PDF]]>
+            </line>
+            <line>
+              <![CDATA[Set PDF and extract content]]>
+            </line>
+            <line>
+              <![CDATA[PDF contentent extracted successfully]]>
+            </line>
           </reporter-output>
-        </test-method> <!-- test -->
-      </class> <!-- test.QDJarTes.PDFTest -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+        </test-method> <!-- initialConfig -->
+        <test-method signature="qualidexImageTest()[pri:0, instance:com.qualitestgroup.qualidexexcelutility.Unit_Test@26275bef]" started-at="2022-09-27T11:07:32Z" name="qualidexImageTest" finished-at="2022-09-27T11:07:34Z" duration-ms="1843" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[Finding image in PDF]]>
+            </line>
+            <line>
+              <![CDATA[Image found in the PDF]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- qualidexImageTest -->
+        <test-method signature="qualidexLibraryTest3()[pri:0, instance:com.qualitestgroup.qualidexexcelutility.Unit_Test@26275bef]" started-at="2022-09-27T11:07:34Z" name="qualidexLibraryTest3" finished-at="2022-09-27T11:07:34Z" duration-ms="21" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[ Find the occurence of text : Versicherung]]>
+            </line>
+            <line>
+              <![CDATA[Versicherung text found 36 times in a PDF]]>
+            </line>
+            <line>
+              <![CDATA[ Find the text Angebot is in proper format]]>
+            </line>
+            <line>
+              <![CDATA[Angebot text is in format]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- qualidexLibraryTest3 -->
+        <test-method signature="qualidexLibraryTest1()[pri:0, instance:com.qualitestgroup.qualidexexcelutility.Unit_Test@26275bef]" started-at="2022-09-27T11:07:34Z" name="qualidexLibraryTest1" finished-at="2022-09-27T11:07:35Z" duration-ms="800" status="FAIL">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Test case failed due to Multiple Assertion failures
+A 100% open rate, 98% read rate and 90% response is not present in the PDF expected [true] but found [false],
+Test Invalid content is not present in the PDF expected [true] but found [false],
+Subscribers List, Growth of Subscribers, is not present in the PDF expected [true] but found [false],
+Business Situation: is not present in the PDF expected [true] but found [false],
+Test invalid content2 is not present in the PDF expected [true] but found [false],
+Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF expected [true] but found [false],
+Screenshots: is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false],
+fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Test case failed due to Multiple Assertion failures
+A 100% open rate, 98% read rate and 90% response is not present in the PDF expected [true] but found [false],
+Test Invalid content is not present in the PDF expected [true] but found [false],
+Subscribers List, Growth of Subscribers, is not present in the PDF expected [true] but found [false],
+Business Situation: is not present in the PDF expected [true] but found [false],
+Test invalid content2 is not present in the PDF expected [true] but found [false],
+Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF expected [true] but found [false],
+Screenshots: is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false],
+fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false]
+at com.qualitestgroup.data_extract_demo.damoregroup.Softassert.assertAll(Softassert.java:55)
+at com.qualitestgroup.qualidexexcelutility.Unit_Test.qualidexLibraryTest1(Unit_Test.java:79)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[Set Excel location]]>
+            </line>
+            <line>
+              <![CDATA[Excel location has been set and start finding excel data in PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : A 100% open rate, 98% read rate and 90% response]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: A 100% open rate, 98% read rate and 90% response is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[A 100% open rate, 98% read rate and 90% response is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test Invalid content]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test Invalid content is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Subscribers List, Growth of Subscribers,]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Subscribers List, Growth of Subscribers, is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Subscribers List, Growth of Subscribers, is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Business Situation:]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Business Situation: is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Business Situation: is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test invalid content2]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test invalid content2 is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test invalid content2 is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Screenshots:]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Screenshots: is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Screenshots: is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test Invalid content 3]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen]]>
+            </line>
+            <line>
+              <![CDATA[Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen is present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG]]>
+            </line>
+            <line>
+              <![CDATA[Modellrechnung nach Â§ 154 VVG is present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Modellrechnung]]>
+            </line>
+            <line>
+              <![CDATA[Modellrechnung is present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei ]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test Invalid content 3]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest1_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- qualidexLibraryTest1 -->
+        <test-method signature="qualidexLibraryTest2()[pri:0, instance:com.qualitestgroup.qualidexexcelutility.Unit_Test@26275bef]" started-at="2022-09-27T11:07:35Z" name="qualidexLibraryTest2" finished-at="2022-09-27T11:07:35Z" duration-ms="76" status="FAIL">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Test case failed due to Multiple Assertion failures
+A 100% open rate, 98% read rate and 90% response is not present in the PDF expected [true] but found [false],
+Test Invalid content is not present in the PDF expected [true] but found [false],
+Subscribers List, Growth of Subscribers, is not present in the PDF expected [true] but found [false],
+Business Situation: is not present in the PDF expected [true] but found [false],
+Test invalid content2 is not present in the PDF expected [true] but found [false],
+Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF expected [true] but found [false],
+Screenshots: is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false],
+fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Test Invalid content is not present in the PDF expected [true] but found [false],
+Test invalid content2 is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Test case failed due to Multiple Assertion failures
+A 100% open rate, 98% read rate and 90% response is not present in the PDF expected [true] but found [false],
+Test Invalid content is not present in the PDF expected [true] but found [false],
+Subscribers List, Growth of Subscribers, is not present in the PDF expected [true] but found [false],
+Business Situation: is not present in the PDF expected [true] but found [false],
+Test invalid content2 is not present in the PDF expected [true] but found [false],
+Here the Messages is received by Subscribers. The message is processed 
+and marked valid or invalid is not present in the PDF expected [true] but found [false],
+Screenshots: is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false],
+fÃ¼r Finanzdienstleistungsaufsicht (BaFin)
+Sektor Versicherungsaufsicht
+Graurheindorfer StraÃŸe 108, 53117 Bonn
+Oder: Postfach 1253, 53002 Bonn
+E-Mail: poststelle@bafin.de
+Telefon 0228 4108-0, Telefax 0228 4108-1550 is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Test Invalid content is not present in the PDF expected [true] but found [false],
+Test invalid content2 is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false],
+Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false],
+Test Invalid content 3 is not present in the PDF expected [true] but found [false]
+at com.qualitestgroup.data_extract_demo.damoregroup.Softassert.assertAll(Softassert.java:55)
+at com.qualitestgroup.qualidexexcelutility.Unit_Test.qualidexLibraryTest2(Unit_Test.java:110)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+at org.testng.TestRunner.privateRun(TestRunner.java:648)
+at org.testng.TestRunner.run(TestRunner.java:505)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+at org.testng.TestNG.runSuites(TestNG.java:1049)
+at org.testng.TestNG.run(TestNG.java:1017)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[Set Excel location]]>
+            </line>
+            <line>
+              <![CDATA[Excel location has been set and start finding excel data in PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test Invalid content]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test Invalid content is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test invalid content2]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test invalid content2 is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test invalid content2 is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test Invalid content 3]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen]]>
+            </line>
+            <line>
+              <![CDATA[Modellrechnung nach Â§ 154 VVG informiert Sie Ã¼ber die mÃ¶glichen is present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Modellrechnung nach Â§ 154 VVG]]>
+            </line>
+            <line>
+              <![CDATA[Modellrechnung nach Â§ 154 VVG is present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei ]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Sie haben auÃŸerdem die MÃ¶glichkeit, sich an die fÃ¼r uns zustÃ¤ndige AufsichtsbehÃ¶rde zu wenden, wenn Sie mit unserer 
+Betreuung nicht zufrieden sind oder Meinungsverschiedenheiten bei  is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[Validation Text : Test Invalid content 3]]>
+            </line>
+            <line>
+              <![CDATA[Assertion Failed due to java.lang.AssertionError: Test Invalid content 3 is not present in the PDF expected [true] but found [false]]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+            <line>
+              <![CDATA[Test Invalid content 3 is not present in the PDF]]>
+            </line>
+            <line>
+              <![CDATA[<a href='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png'> <img src='C:\Users\pavan.t\eclipse-workspace\QualidexDemo\target\surefire-reports\failure_screenshots\failure_screenshots\qualidexLibraryTest2_27_09_2022_04_37_35.png' height='100' width='100'/> </a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- qualidexLibraryTest2 -->
+      </class> <!-- com.qualitestgroup.qualidexexcelutility.Unit_Test -->
+    </test> <!-- Qualidex Report -->
+  </suite> <!-- Qualidex -->
 </testng-results>

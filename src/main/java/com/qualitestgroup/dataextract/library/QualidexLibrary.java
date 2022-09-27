@@ -6,17 +6,12 @@ import java.awt.Toolkit;
 import java.awt.image.PixelGrabber;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
-
+import java.io.StringReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
@@ -70,21 +65,21 @@ public class QualidexLibrary {
 	private static Workbook wb;
 	private static Sheet sh;
 	private static Cell value;
-	private static final String PdfToText = ".\\src\\test\\resources\\pdtxtoutputUTF8.txt";
+	private static String PDFToText;
 	private static String PdfPath;
 	private static String headerCoords;
 	private static String footerCoords;
 
 	/**
-	 * This method set PDF and extarct PDF content
+	 * This method set PDF and extract PDF content
 	 * 
 	 * @param PDFPath - PDF path
-	 * @return - Boolean True or False
 	 */
 	public static void setPDFLocationAndExtract(String PDFPath) {
 		try {
 			PdfPath = PDFPath;
-			pdfExtracter();
+			// store extracted text in variable PDFToText
+			PDFToText = pdfExtracter();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,10 +89,11 @@ public class QualidexLibrary {
 	/**
 	 * This method sets Header coordinates
 	 * 
-	 * @param coords - Header coodinates
+	 * @param coords - Header coordinates
 	 * @return - Boolean True or False
 	 */
-	public static boolean setHeaderCoords(String coords) {
+	@SuppressWarnings("unused")
+	private static boolean setHeaderCoords(String coords) {
 		try {
 			headerCoords = coords;
 		} catch (Exception e) {
@@ -113,7 +109,8 @@ public class QualidexLibrary {
 	 * @param coords - Footer coordinates
 	 * @return - Boolean True or False
 	 */
-	public static boolean setFooterCoords(String coords) {
+	@SuppressWarnings("unused")
+	private static boolean setFooterCoords(String coords) {
 		try {
 			footerCoords = coords;
 		} catch (Exception e) {
@@ -192,11 +189,12 @@ public class QualidexLibrary {
 
 	/**
 	 * 
-	 * This Method reads cell value from excel and compares with PDF
+	 * This Method reads cell value from excel and returns as list of strings
 	 * 
 	 * @param excelSheetPath - Path of Excel
 	 * @param sheet          - Excel Sheet
 	 * @param cellNumber     - cell number
+	 * @return string validationCellValues
 	 */
 	public static List<String> readCellValues(String excelSheetPath, String sheet, int cellNumber) {
 
@@ -236,15 +234,14 @@ public class QualidexLibrary {
 
 	/**
 	 *
-	 * This method compares excel filtered value against PDF
+	 * This method apply filter to excel and returns as list of string
 	 * 
 	 * @param excelSheetPath     - Path of excel sheet
 	 * @param sheet              - Excel sheet
 	 * @param filterCellValue    - value which is being filtered
 	 * @param cellNumber         - cell number
 	 * @param filterColumnNumber - Column where filter will be applied
-	 * @throws Exception - Exception
-	 * 
+	 * @return string validationCellValues
 	 */
 	public static List<String> applyFilterAndStoreCellValues(String excelSheetPath, String sheet,
 			String filterCellValue, int filterColumnNumber, int cellNumber) {
@@ -293,16 +290,14 @@ public class QualidexLibrary {
 	 * 
 	 * 
 	 * @param value - String value which is being verifie
-	 * @return Boolean True or False
+	 * @return - Boolean True or False
 	 */
 	@SuppressWarnings("unused")
 	private static boolean existsInHeader(String value) {
 		boolean found = false;
 		try {
-			File file1 = new File(PdfToText);
+			File file1 = new File(PDFToText);
 			BufferedReader br = new BufferedReader(new FileReader(file1));
-
-			// Declaring a string variable
 			String st;
 			// Condition holds true till
 			// there is character in a string
@@ -349,23 +344,23 @@ public class QualidexLibrary {
 
 	/**
 	 * 
-	 * This method compare given value with Pdf
+	 * This method finds the given string values in Pdf
 	 * 
 	 * @param value - Text Value which being compared against PDF
+	 * @return boolean result
 	 */
 
 	public static boolean findValuesInPdf(String value) {
 
 		boolean result = false;
 		try {
-			File file1 = new File(PdfToText);
 
 			String st1 = value;
 
 			logger.info("Validation text is : " + st1);
 
 			{
-				BufferedReader br = new BufferedReader(new FileReader(file1));
+				BufferedReader br = new BufferedReader(new StringReader(PDFToText));
 
 				String st;
 				// Condition holds true till
@@ -405,7 +400,7 @@ public class QualidexLibrary {
 	private static boolean existsInFooter(String value) {
 		boolean found = false;
 		try {
-			File file1 = new File(PdfToText);
+			File file1 = new File(PDFToText);
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 
 			String st;
@@ -459,7 +454,7 @@ public class QualidexLibrary {
 	private static boolean isEmptyHeader() {
 		boolean found = false;
 		try {
-			File file1 = new File(PdfToText);
+			File file1 = new File(PDFToText);
 
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 
@@ -516,7 +511,7 @@ public class QualidexLibrary {
 		boolean found = false;
 		try {
 
-			File file1 = new File(PdfToText);
+			File file1 = new File(PDFToText);
 
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 
@@ -585,12 +580,13 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * This method extract PDF data information into text file
+	 * This method extract PDF data into text file
 	 * 
 	 * @param PDFPath- Path of Pdf
 	 * 
 	 */
-	private static void pdfExtracter() {
+	private static String pdfExtracter() {
+		String PdfToText = null;
 		try {
 
 			Process process = Runtime.getRuntime().exec(
@@ -598,14 +594,12 @@ public class QualidexLibrary {
 					new File(".\\pdtextcreater"));
 			process.waitFor();
 
-			File file = new File(".\\src\\test\\resources");
-			file.mkdir();
-
-			TextUTF16LEToTextUTF8("C:\\PDF\\pdtxtoutput.txt");
+			PdfToText = TextUTF16LEToTextUTF8("C:\\PDF\\pdtxtoutput.txt");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return PdfToText;
 
 	}
 
@@ -615,74 +609,76 @@ public class QualidexLibrary {
 	 * 
 	 * @param pdtxtOutput - Pdf to text .txt file
 	 * 
-	 * @throws IOException
 	 */
-	private static void TextUTF16LEToTextUTF8(String pdtxtOutput) {
+
+	private static String TextUTF16LEToTextUTF8(String pdtxtOutput) {
+		String cellValues = null;
 		try {
 			FileInputStream fis = new FileInputStream(pdtxtOutput);
 			InputStreamReader isr = new InputStreamReader(fis, "UTF-16LE");
-			Reader in = new BufferedReader(isr);
-			FileOutputStream fos = new FileOutputStream(".\\src\\test\\resources\\pdtxtoutputUTF8.txt");
-			OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
-			Writer out = new BufferedWriter(osw);
 
-			int ch;
-			while ((ch = in.read()) > -1) {
-				out.write(ch);
+			BufferedReader in = new BufferedReader(isr);
 
+			StringBuilder stringBuilder = new StringBuilder();
+			String line = null;
+			String ls = System.getProperty("line.separator");
+			while ((line = in.readLine()) != null) {
+				stringBuilder.append(line);
+				stringBuilder.append(ls);
 			}
 
-			out.close();
+			String content = stringBuilder.toString();
+
+			byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
+			cellValues = new String(bytes);
+
 			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return cellValues;
 	}
 
 	/**
 	 * 
-	 * This method finds the occurrence of given value in PDF
+	 * This method finds the occurrence of given string value in PDF
 	 * 
 	 * @param value - Text which is being validated
 	 * 
-	 * @return count of string in PDF
+	 * @return - count of string in PDF
 	 */
 	@SuppressWarnings("resource")
 	public static int findOccurence(String value) {
 		int count = 0;
 		try {
 
-			File file1 = new File(PdfToText);
-
 			logger.info("Validation text is : " + value);
 
-			{
-				BufferedReader br = new BufferedReader(new FileReader(file1));
+			BufferedReader br = new BufferedReader(new StringReader(PDFToText));
 
-				String st;
+			String st;
 
-				while ((st = br.readLine()) != null) {
+			while ((st = br.readLine()) != null) {
 
-					if (st.contains(value)) {
-						count++;
-
-					}
-
-					else {
-
-						continue;
-
-					}
+				if (st.contains(value)) {
+					count++;
 
 				}
-				if (count > 0) {
 
-					logger.info("Validated text " + value + " appears " + count + " times in a PDF");
+				else {
 
-				} else {
-					logger.info("Text" + value + " not found in PDF");
+					continue;
 
 				}
+
+			}
+			if (count > 0) {
+
+				logger.info("Validated text " + value + " appears " + count + " times in a PDF");
+
+			} else {
+				logger.info("Text" + value + " not found in PDF");
+
 			}
 
 		} catch (Exception e) {
@@ -770,7 +766,7 @@ public class QualidexLibrary {
 	 * @param PDFPath      - Path of PDF
 	 * @param refImagePath - Path of reference image
 	 * 
-	 * @return result
+	 * @return - boolean result
 	 */
 	public static boolean findImage(String PDFPath, String refImagePath) {
 		boolean result = false;
@@ -842,7 +838,7 @@ public class QualidexLibrary {
 	 * 
 	 * @param imageList - List image extracted from PDF
 	 * @param value     - value "true"
-	 * @return Boolean true or false
+	 * @return - Boolean true or false
 	 */
 	private static boolean searchImage(String imageList, String value) {
 		boolean result = false;
@@ -919,7 +915,7 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * This method finds the given text in PDF
+	 * This method finds the given string value in PDF
 	 * 
 	 * @param value - Text which is being searched
 	 * @return boolean - bolean True or false
@@ -927,42 +923,40 @@ public class QualidexLibrary {
 	public static boolean findText(String value) {
 		boolean found = false;
 		try {
-			File file1 = new File(PdfToText);
+
 			logger.info("Validation text is : " + value);
 
-			{
-				BufferedReader br = new BufferedReader(new FileReader(file1));
+			BufferedReader br = new BufferedReader(new StringReader(PDFToText));
 
-				String st;
-				// Condition holds true till
-				// there is character in a string
-				while ((st = br.readLine()) != null) {
+			String st;
+			// Condition holds true till
+			// there is character in a string
+			while ((st = br.readLine()) != null) {
 
-					String regexPattern = value;
+				String regexPattern = value;
 
-					Pattern pattern = Pattern.compile(regexPattern);
-					Matcher matcher = pattern.matcher(st);
+				Pattern pattern = Pattern.compile(regexPattern);
+				Matcher matcher = pattern.matcher(st);
 
-					if (!(matcher.find())) {
-						continue;
-					} else {
-						found = true;
-						logger.info(st);
-						logger.info("Found the match: " + matcher.group() + " is starting at index " + matcher.start()
-								+ "  and ending at index " + matcher.end());
+				if (!(matcher.find())) {
+					continue;
+				} else {
+					found = true;
+					logger.info(st);
+					logger.info("Found the match: " + matcher.group() + " is starting at index " + matcher.start()
+							+ "  and ending at index " + matcher.end());
 
-						break;
-
-					}
+					break;
 
 				}
-				if ((st = br.readLine()) == null) {
-					found = false;
-					logger.info("match not found");
 
-				}
-				br.close();
 			}
+			if ((st = br.readLine()) == null) {
+				found = false;
+				logger.info("match not found");
+
+			}
+			br.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -985,52 +979,49 @@ public class QualidexLibrary {
 		boolean found = false;
 		String stringLine = null;
 		try {
-			// Declaring a string variable
+
 			String st;
-			File extractedFile = new File(PdfToText);
-			BufferedReader extractedBr = new BufferedReader(new FileReader(extractedFile));
+			BufferedReader extractedBr = new BufferedReader(new StringReader(PDFToText));
 
-			{
+			while ((st = extractedBr.readLine()) != null) {
+				// Decode string using UTF_8 encoder
+				byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
+				String decodedFile = new String(bytes);
 
-				while ((st = extractedBr.readLine()) != null) {
-					// Decode string using UTF_8 encoder
-					byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
-					String decodedFile = new String(bytes);
+				stringLine = decodedFile;
 
-					stringLine = decodedFile;
+				if (st.contains(stringLine)) {
 
-					if (st.contains(stringLine)) {
+					// regex to match the exact font style
+					String fontStyleRegexPattern = "\\+" + fontStyle + "\"," + "\\s";
+					Pattern fontStylePattern = Pattern.compile(fontStyleRegexPattern);
+					Matcher fontStyleMatcher = fontStylePattern.matcher(st);
 
-						// regex to match the exact font style
-						String fontStyleRegexPattern = "\\+" + fontStyle + "\"," + "\\s";
-						Pattern fontStylePattern = Pattern.compile(fontStyleRegexPattern);
-						Matcher fontStyleMatcher = fontStylePattern.matcher(st);
+					if (fontStyleMatcher.find()) {
 
-						if (fontStyleMatcher.find()) {
+						// regex to match the exact font size
+						String fontSizeRegexPattern = "\\s" + fontSize + "," + "\\s";
+						Pattern fontSizePattern = Pattern.compile(fontSizeRegexPattern);
+						Matcher fontSizeMatcher = fontSizePattern.matcher(st);
 
-							// regex to match the exact font size
-							String fontSizeRegexPattern = "\\s" + fontSize + "," + "\\s";
-							Pattern fontSizePattern = Pattern.compile(fontSizeRegexPattern);
-							Matcher fontSizeMatcher = fontSizePattern.matcher(st);
+						if (fontSizeMatcher.find()) {
 
-							if (fontSizeMatcher.find()) {
+							logger.info(st);
+							logger.info("Validation text " + stringLine + " is found with a expected format");
 
-								logger.info(st);
-								logger.info("Validation text " + stringLine + " is found with a expected format");
-
-								found = true;
-								break;
-							}
+							found = true;
+							break;
 						}
 					}
+				}
 
-					else {
+				else {
 
-						continue;
+					continue;
 
-					}
 				}
 			}
+
 			if ((st = extractedBr.readLine()) == null) {
 
 				logger.info(stringLine + ": text isn't found in the expected format");
@@ -1039,7 +1030,9 @@ public class QualidexLibrary {
 			}
 			extractedBr.close();
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 		return found;
@@ -1142,8 +1135,6 @@ public class QualidexLibrary {
 
 				}
 
-				// We assume we will not have 2 delete in sequence after diff_cleanupEfficiency
-				// we also assume a string replace will always have Delete, Insert and not
 				// Insert, Delete
 
 				else if (b.contains("DELETE")) {
@@ -1188,7 +1179,6 @@ public class QualidexLibrary {
 
 					} else if (earlierDiffState.equals("DELETE")) {
 
-						// in this case it means string is deleted
 						if (diff == null || diff.isEmpty()) {
 							diffFinalRepor.add(new Diff(Operation.DELETE, textInEarlierDiff));
 							diffFinalRepor.add(f);
@@ -1260,7 +1250,7 @@ public class QualidexLibrary {
 			Path path = Paths.get(".\\Difference.html");
 
 			try {
-				// Now calling Files.writeString() method
+
 				// with path , content & standard charsets
 				Files.writeString(path, result.replaceAll("&para;", ""), StandardCharsets.UTF_8);
 
