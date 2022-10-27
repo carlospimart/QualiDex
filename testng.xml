@@ -3,15 +3,15 @@
 <suite name="Qualidex" verbose="2" >
 	<listeners>
 		<listener
-			class-name="com.qualitestgroup.data_extract_demo.damoregroup.TestNGCustomReportListener" />
+			class-name="main.java.com.qualitestgroup.data_extract_demo.damoregroup.TestNGCustomReportListener" />
 		<listener
-			class-name="com.qualitestgroup.data_extract_demo.damoregroup.OnTestFailure" />
+			class-name="main.java.com.qualitestgroup.data_extract_demo.damoregroup.OnTestFailure" />
 	</listeners>
 	<test name="Qualidex Report">
 		<classes>
-			<class name="com.qualitestgroup.qualidexexcelutility.Unit_Test">
-				<methods>	
-							<include name = "qualidexImageTest"/>							
+			<class name="test.java.com.qualitestgroup.qualidexexcelutility.Unit_Test">
+				<methods>
+							<include name = "qualidexImageTest"/>
 							<include name="qualidexLibraryTest3"/>
 							<include name="qualidexLibraryTest1"/>
 							<include name = "qualidexLibraryTest2"/>

@@ -24,12 +24,12 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.xml.sax.SAXException;
 
-import com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
-import com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
 import com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction;
 import com.qualitestgroup.dataextract.pdf.PDFOpener;
 import com.qualitestgroup.dataextract.pdf.extraction.PDFText2XML;
-import com.qualitestgroup.dataextract.utilities.QualidexUtility;
+import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
 
 
 public class PdfCompare {

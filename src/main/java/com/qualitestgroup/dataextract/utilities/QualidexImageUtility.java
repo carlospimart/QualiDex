@@ -1,4 +1,4 @@
-package com.qualitestgroup.dataextract.utilities;
+package main.java.com.qualitestgroup.dataextract.utilities;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

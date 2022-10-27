@@ -1,4 +1,4 @@
-package com.qualitestgroup.qualidexexcelutility;
+package test.java.com.qualitestgroup.qualidexexcelutility;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
-import com.qualitestgroup.dataextract.library.QualidexLibrary;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
+import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
 
 
 

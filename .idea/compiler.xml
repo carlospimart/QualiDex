@@ -9,5 +9,8 @@
         <module name="Qualidex" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Qualidex" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
