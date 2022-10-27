@@ -1,4 +1,4 @@
-package com.qualitestgroup.dataextract.library;
+package main.java.com.qualitestgroup.dataextract.library;
 
 import java.awt.Desktop;
 import java.awt.Image;
@@ -22,13 +22,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,17 +40,17 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
-import com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
 
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 import name.fraser.neil.plaintext.diff_match_patch.Operation;
 
 /**
- * 
+ *
  * Qualidex library
- * 
+ *
  * @author pavan.kumar
  *
  */
@@ -72,7 +66,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method set PDF and extract PDF content
-	 * 
+	 *
 	 * @param PDFPath - PDF path
 	 */
 	public static void setPDFLocationAndExtract(String PDFPath) {
@@ -88,7 +82,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method sets Header coordinates
-	 * 
+	 *
 	 * @param coords - Header coordinates
 	 * @return - Boolean True or False
 	 */
@@ -105,7 +99,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method sets footer coordinates
-	 * 
+	 *
 	 * @param coords - Footer coordinates
 	 * @return - Boolean True or False
 	 */
@@ -121,7 +115,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method sets string section with font style and font size
-	 * 
+	 *
 	 * @param section   - String section
 	 * @param fontStyle - font style
 	 * @param fontSize  - font size
@@ -134,9 +128,9 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * 
+	 *
 	 * This method sets excel path
-	 * 
+	 *
 	 * @param excelPath - Path of excel
 	 * @return - Boolean True or False
 	 */
@@ -149,13 +143,13 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * 
+	 *
 	 * This method reads the cell value from excel
-	 * 
-	 * @param ExcelSheetPath - Path of excel sheet
-	 * @param Sheet          - Excel Sheet
-	 * @param CellNumber     - cell number
-	 * 
+	 *
+	 * @param excelSheetPath - Path of excel sheet
+	 * @param sheet          - Excel Sheet
+	 * @param cellNumber     - cell number
+	 *
 	 * @return cellValue
 	 */
 	@SuppressWarnings("unused")
@@ -188,9 +182,9 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * 
+	 *
 	 * This Method reads cell value from excel and returns as list of strings
-	 * 
+	 *
 	 * @param excelSheetPath - Path of Excel
 	 * @param sheet          - Excel Sheet
 	 * @param cellNumber     - cell number
@@ -235,7 +229,7 @@ public class QualidexLibrary {
 	/**
 	 *
 	 * This method apply filter to excel and returns as list of string
-	 * 
+	 *
 	 * @param excelSheetPath     - Path of excel sheet
 	 * @param sheet              - Excel sheet
 	 * @param filterCellValue    - value which is being filtered
@@ -244,7 +238,7 @@ public class QualidexLibrary {
 	 * @return string validationCellValues
 	 */
 	public static List<String> applyFilterAndStoreCellValues(String excelSheetPath, String sheet,
-			String filterCellValue, int filterColumnNumber, int cellNumber) {
+															 String filterCellValue, int filterColumnNumber, int cellNumber) {
 		List<String> validationCellValues = new ArrayList<>();
 		try {
 
@@ -285,10 +279,10 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * 
+	 *
 	 * This method verifies the value in the Header
-	 * 
-	 * 
+	 *
+	 *
 	 * @param value - String value which is being verifie
 	 * @return - Boolean True or False
 	 */
@@ -343,9 +337,9 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * 
+	 *
 	 * This method finds the given string values in Pdf
-	 * 
+	 *
 	 * @param value - Text Value which being compared against PDF
 	 * @return boolean result
 	 */
@@ -392,7 +386,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method verifies the value in the Footer
-	 * 
+	 *
 	 * @param value - String value which is being verified
 	 * @return - Boolean True or False
 	 */
@@ -446,7 +440,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method verifies whether Header is empty or not
-	 * 
+	 *
 	 *
 	 * @return - Boolean True or False
 	 */
@@ -501,8 +495,8 @@ public class QualidexLibrary {
 
 	/**
 	 * This method verifies whether footer is empty or not
-	 * 
-	 * 
+	 *
+	 *
 	 * @return - Boolean True or False
 	 */
 
@@ -581,9 +575,9 @@ public class QualidexLibrary {
 
 	/**
 	 * This method extract PDF data into text file
-	 * 
-	 * @param PDFPath- Path of Pdf
-	 * 
+	 *
+	 *
+	 *
 	 */
 	private static String pdfExtracter() {
 		String PdfToText = null;
@@ -606,9 +600,9 @@ public class QualidexLibrary {
 	/**
 	 * This method converts text extracted from PDF which is in UTF-16LE to text
 	 * UTF-8 format
-	 * 
+	 *
 	 * @param pdtxtOutput - Pdf to text .txt file
-	 * 
+	 *
 	 */
 
 	private static String TextUTF16LEToTextUTF8(String pdtxtOutput) {
@@ -640,11 +634,11 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * 
+	 *
 	 * This method finds the occurrence of given string value in PDF
-	 * 
+	 *
 	 * @param value - Text which is being validated
-	 * 
+	 *
 	 * @return - count of string in PDF
 	 */
 	@SuppressWarnings("resource")
@@ -689,9 +683,9 @@ public class QualidexLibrary {
 	}
 
 	/**
-	 * 
+	 *
 	 * This method fetch the validation content from DB
-	 * 
+	 *
 	 * @param url        - DB url
 	 * @param userName   - DB user name
 	 * @param password   - DB password
@@ -719,7 +713,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method verifies whether text is present in PDF
-	 * 
+	 *
 	 * @param PDFPath - Path of Pdf
 	 * @return - Boolean True or False
 	 */
@@ -748,7 +742,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method helps to find the table in PDF
-	 * 
+	 *
 	 * @param PDFPath  - Path of PDF
 	 * @param refTable - Path of reference table
 	 * @return
@@ -762,10 +756,10 @@ public class QualidexLibrary {
 
 	/**
 	 * This methods helps to find the image in the PDF
-	 * 
+	 *
 	 * @param PDFPath      - Path of PDF
 	 * @param refImagePath - Path of reference image
-	 * 
+	 *
 	 * @return - boolean result
 	 */
 	public static boolean findImage(String PDFPath, String refImagePath) {
@@ -801,7 +795,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method extracts the images from PDF
-	 * 
+	 *
 	 * @param PDF - PDF path
 	 * @throws IOException
 	 */
@@ -835,7 +829,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method finds the reference image with the PDF
-	 * 
+	 *
 	 * @param imageList - List image extracted from PDF
 	 * @param value     - value "true"
 	 * @return - Boolean true or false
@@ -867,7 +861,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method process the refImage with Images in PDF
-	 * 
+	 *
 	 * @param imageFiles - List of Images extracted from PDF
 	 * @param refImage   - refernec image
 	 * @return Boolean true or false
@@ -916,7 +910,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method finds the given string value in PDF
-	 * 
+	 *
 	 * @param value - Text which is being searched
 	 * @return boolean - bolean True or false
 	 */
@@ -968,7 +962,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method finds String value in the particular font format in PDF
-	 * 
+	 *
 	 * @param value     - String value
 	 * @param fontStyle - String font style
 	 * @param fontSize  - String font size
@@ -1032,7 +1026,7 @@ public class QualidexLibrary {
 
 		} catch (
 
-		Exception e) {
+				Exception e) {
 			e.printStackTrace();
 		}
 		return found;
@@ -1041,7 +1035,7 @@ public class QualidexLibrary {
 
 	/**
 	 * This method helps highlight the PDF file differences
-	 * 
+	 *
 	 * @param basePDF     : base PDF file path
 	 * @param refPDF      : refernce PDF file path
 	 * @param diff        : difference between two PDF files
@@ -1051,7 +1045,7 @@ public class QualidexLibrary {
 	 */
 
 	private static String qualiDexCompare(String basePDF, String refPDF, Map<String, String> diff,
-			List<String> toBeRemoved, List<String> newlyAdded) {
+										  List<String> toBeRemoved, List<String> newlyAdded) {
 		try {
 			String PDFText1 = PDF_Extractor(basePDF);
 			String PDFText2 = PDF_Extractor(refPDF);
@@ -1252,7 +1246,7 @@ public class QualidexLibrary {
 			try {
 
 				// with path , content & standard charsets
-				Files.writeString(path, result.replaceAll("&para;", ""), StandardCharsets.UTF_8);
+				Files.write(path, Collections.singleton(result.replaceAll("&para;", "")), StandardCharsets.UTF_8);
 
 			}
 
@@ -1279,7 +1273,7 @@ public class QualidexLibrary {
 	/**
 	 * This method highlights Pdf differences by ignoring expected deleted strings ,
 	 * newly inserted strings and modified strings in ref. PDF
-	 * 
+	 *
 	 * @param basePDF     Base PDF file path
 	 * @param refPDF      ref. PDF file path
 	 * @param diff        modified strings of comparison between base PDF vs ref.
@@ -1290,13 +1284,13 @@ public class QualidexLibrary {
 	 */
 
 	public static String qualiDexCompares(String basePDF, String refPDF, Map<String, String> diff,
-			List<String> toBeRemoved, List<String> newlyAdded) {
+										  List<String> toBeRemoved, List<String> newlyAdded) {
 		return qualiDexCompare(basePDF, refPDF, diff, toBeRemoved, newlyAdded);
 	}
 
 	/**
 	 * This method highlights Pdf differences by comparing base PDF vs Ref PDF
-	 * 
+	 *
 	 * @param basePDF Base PDF file path
 	 * @param refPDF  ref. PDF file path
 	 * @return returns PDF comparison
@@ -1313,7 +1307,7 @@ public class QualidexLibrary {
 	/**
 	 * This method highlights Pdf differences by ignoring expected modified Strings
 	 * in ref PDF
-	 * 
+	 *
 	 * @param basePDF Base PDF file path
 	 * @param refPDF  ref. PDF file path
 	 * @param diff    modified strings of comparison between base PDF vs ref. PDF
@@ -1330,7 +1324,7 @@ public class QualidexLibrary {
 	/**
 	 * This method highlights Pdf differences by ignoring expected newly inserted
 	 * strings in ref PDF
-	 * 
+	 *
 	 * @param basePDF    Base PDF file path
 	 * @param refPDF     ref. PDF file path
 	 * @param newlyAdded newly inserted strings in base PDF
@@ -1346,7 +1340,7 @@ public class QualidexLibrary {
 	/**
 	 * This method highlights Pdf differences by ignoring expected deleted and newly
 	 * inserted strings in ref PDF
-	 * 
+	 *
 	 * @param basePDF     Base PDF file path
 	 * @param refPDF      ref. PDF file path
 	 * @param toBeRemoved deleted strings in ref. PDF
@@ -1355,14 +1349,14 @@ public class QualidexLibrary {
 	 */
 
 	public static String qualiDexCompares(String basePDF, String refPDF, List<String> toBeRemoved,
-			List<String> newlyAdded) {
+										  List<String> newlyAdded) {
 		Map<String, String> diff = new HashMap<>();
 		return qualiDexCompare(basePDF, refPDF, diff, toBeRemoved, newlyAdded);
 	}
 
 	/**
 	 * This method extracts PDF content
-	 * 
+	 *
 	 * @param PDF Pdf file
 	 * @return extracted Pdf Texts
 	 * @throws IOException

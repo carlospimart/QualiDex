@@ -1,4 +1,4 @@
-package com.qualitestgroup.data_extract_demo.damoregroup;
+package main.java.com.qualitestgroup.data_extract_demo.damoregroup;
 
 import java.util.Date;
 import java.util.List;
