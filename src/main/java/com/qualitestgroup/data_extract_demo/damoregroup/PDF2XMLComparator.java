@@ -24,11 +24,15 @@ import org.xml.sax.SAXException;
 
 
 public class PDF2XMLComparator {
-	private static final Log logger = LogFactory.getLog(PDF2XMLComparator.class);
 
-	static SoftAssert softAssertion = new SoftAssert();
-	static int countValue = 0;
+	private static final Log logger = LogFactory.getLog(PDF2XMLComparator.class);
+	private Asserter asserter = new Asserter();
+	private SoftAssert softAssertion = new SoftAssert();
+	private int countValue = 0;
 	private static final String PARAGRAPH = "paragraph";
+
+	public PDF2XMLComparator(){
+	}
 
 	/**
 	 * @param xmlSource
@@ -60,7 +64,7 @@ public class PDF2XMLComparator {
 	 * @param xmlFilePath1
 	 * @param xmlFilePath2 Method to Compare both PDFs data by paragraphs
 	 */
-	public static void validatePDFFileData(String xmlFilePath1, String xmlFilePath2) {
+	public void validatePDFFileData(String xmlFilePath1, String xmlFilePath2) {
 		ArrayList<String> arrLst1 = new ArrayList<String>();
 		ArrayList<String> arrLst2 = new ArrayList<String>();
 		try {
@@ -98,7 +102,7 @@ public class PDF2XMLComparator {
 				getAllDataDifference(arrLst1, arrLst2);
 			} else {
 				logger.info("Both PDf files have same data ");
-				Asserter.validateTrue(true);
+				asserter.validateTrue(true);
 			}
 		} catch (Exception e) {
 			logger.info("Exception caught in validatePDFFileData()  " + e.getMessage());
@@ -115,7 +119,8 @@ public class PDF2XMLComparator {
 	static ArrayList<Object> lineNumArrLst = new ArrayList<Object>();
 	static ArrayList<Object> wordNumArrLst = new ArrayList<Object>();
 
-	public static void getAllDataDifference(List<String> li1, List<String> li2) {
+	public  void getAllDataDifference(List<String> li1, List<String> li2) {
+
 		try {
 			paraNumArrLst.clear();
 			lineNumArrLst.clear();
@@ -188,7 +193,7 @@ public class PDF2XMLComparator {
 				}
 			}
 			if (countValue > 0) {
-				Asserter.validateTrue(countValue == 0,
+				asserter.validateTrue(countValue == 0,
 						"Both PDFs paragraph line count differs please refer console logs to see failure in detail "
 								+ lineNumArrLst);
 			}

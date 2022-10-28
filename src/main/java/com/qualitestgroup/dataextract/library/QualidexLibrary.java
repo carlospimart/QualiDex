@@ -63,6 +63,12 @@ public class QualidexLibrary {
 	private static String PdfPath;
 	private static String headerCoords;
 	private static String footerCoords;
+	private static Asserter asserter = new Asserter();
+
+	//Constructor
+
+	public QualidexLibrary() {
+	}
 
 	/**
 	 * This method set PDF and extract PDF content
@@ -287,7 +293,7 @@ public class QualidexLibrary {
 	 * @return - Boolean True or False
 	 */
 	@SuppressWarnings("unused")
-	private static boolean existsInHeader(String value) {
+	private boolean existsInHeader(String value) {
 		boolean found = false;
 		try {
 			File file1 = new File(PDFToText);
@@ -312,7 +318,7 @@ public class QualidexLibrary {
 							found = true;
 						} else {
 							logger.info("Value " + result + " is not Present in Header " + st);
-							Asserter.validateTrue(st.contains(result),
+							asserter.validateTrue(st.contains(result),
 									"Value " + result + " is not Present in Header " + st);
 							found = false;
 						}
@@ -324,7 +330,7 @@ public class QualidexLibrary {
 			}
 			if ((st = br.readLine()) == null) {
 				logger.info("Header not found");
-				Asserter.validateTrue((st = br.readLine()) != null, "Header not found");
+				asserter.validateTrue((st = br.readLine()) != null, "Header not found");
 				found = false;
 
 			}
@@ -344,7 +350,7 @@ public class QualidexLibrary {
 	 * @return boolean result
 	 */
 
-	public static boolean findValuesInPdf(String value) {
+	public  boolean findValuesInPdf(String value) {
 
 		boolean result = false;
 		try {
@@ -416,7 +422,7 @@ public class QualidexLibrary {
 							found = true;
 						} else {
 							logger.info("Value " + result + " is not Present in footer " + st);
-							Asserter.validateTrue(found, "Value " + result + " is not Present in footer " + st);
+							asserter.validateTrue(found, "Value " + result + " is not Present in footer " + st);
 							found = false;
 						}
 					}
@@ -426,7 +432,7 @@ public class QualidexLibrary {
 
 				if ((st = br.readLine()) == null) {
 					logger.info("Footer not found");
-					Asserter.validateTrue((st = br.readLine()) != null, "Footer not found");
+					asserter.validateTrue((st = br.readLine()) != null, "Footer not found");
 					found = false;
 				}
 
@@ -482,7 +488,7 @@ public class QualidexLibrary {
 				found = false;
 				logger.info(st);
 				logger.info("Header not found");
-				Asserter.validateTrue((st = br.readLine()) != null, "Header not found");
+				asserter.validateTrue((st = br.readLine()) != null, "Header not found");
 
 			}
 			br.close();
@@ -542,7 +548,7 @@ public class QualidexLibrary {
 				found = false;
 				logger.info(st);
 				logger.info("Footer is empty");
-				Asserter.validateTrue((st = br.readLine()) != null, "Footer not found");
+				asserter.validateTrue((st = br.readLine()) != null, "Footer not found");
 
 			}
 			br.close();
