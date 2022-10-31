@@ -2,9 +2,9 @@
  * Copyright (c) 2017-2018. QualiTest Software Testing Limited.
  */
 
-package com.qualitestgroup.dataextract.pdf;
+package main.java.com.qualitestgroup.dataextract.pdf;
 
-import com.qualitestgroup.dataextract.utilities.FileHelper;
+import main.java.com.qualitestgroup.dataextract.utilities.FileHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.pdmodel.PDDocument;

@@ -2,7 +2,7 @@
  * Copyright (c) 2017-2018. QualiTest Software Testing Limited.
  */
 
-package com.qualitestgroup.dataextract.pdf.extraction;
+package main.java.com.qualitestgroup.dataextract.pdf.extraction;
 
 /**
  * @author Daniel Geater

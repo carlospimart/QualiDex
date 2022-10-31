@@ -20,7 +20,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.qualitestgroup.dataextract.utilities.ComparisonMode;
+import main.java.com.qualitestgroup.dataextract.utilities.ComparisonMode;
 import main.java.com.qualitestgroup.dataextract.utilities.QualidexImageUtility;
 
 public class QualidexUtility {

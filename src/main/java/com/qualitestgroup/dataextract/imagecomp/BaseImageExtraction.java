@@ -1,4 +1,4 @@
-package com.qualitestgroup.dataextract.imagecomp;
+package main.java.com.qualitestgroup.dataextract.imagecomp;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
