@@ -10,7 +10,10 @@ import org.testng.collections.Maps;
 
 public class Softassert extends SoftAssert {
 
-	 public static final Map<AssertionError, IAssert<?>> m_errors = Maps.newLinkedHashMap();
+	public Softassert() {
+	}
+
+	public static final Map<AssertionError, IAssert<?>> m_errors = Maps.newLinkedHashMap();
 	 
 	 @Override
 	  protected void doAssert(IAssert<?> a){

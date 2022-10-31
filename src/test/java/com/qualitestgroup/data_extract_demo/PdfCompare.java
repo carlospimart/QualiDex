@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Softassert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -33,12 +34,13 @@ import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
 
 public class PdfCompare extends BaseImageExtraction{
 
+	private final Softassert validateAssert = new Softassert();
 	private static final Log LOG = LogFactory.getLog(PdfCompare.class);
 	private final static Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
 
 	private PDFOpener opener;
 	private PDFText2XML text2XML;
-	public PDF2XMLComparator xmlComparator = new PDF2XMLComparator();
+	//public PDF2XMLComparator xmlComparator = new PDF2XMLComparator();
 	public static String strEncodeXML = "encoding=\"UTF-8\" ";
 	public PDDocument left = null;
 	public PDDocument right = null;
@@ -50,6 +52,7 @@ public class PdfCompare extends BaseImageExtraction{
 	private DecimalFormat df2 = new DecimalFormat("#.##");
 	private String File_1 = "File_1.pdf";
 	private String File_2 = "File_2.pdf";
+	private Asserter asserter = new Asserter();
 	/*
 	 * private String Photography_image1 = "Photography_image1"; private String
 	 * Photography_image2 = "Photography_image2"; private String
@@ -142,7 +145,7 @@ public class PdfCompare extends BaseImageExtraction{
 	public void verifyNumberOfPages() {
 		
 		try {
-			Asserter.validateTrue(left.getNumberOfPages()==right.getNumberOfPages(), "Pages count mismatches, First file "
+			asserter.validateTrue(left.getNumberOfPages()==right.getNumberOfPages(), "Pages count mismatches, First file "
 					+ " pages are " + left.getNumberOfPages() + " and second files pages are " + right.getNumberOfPages());
 		}
 		catch(Exception e) {
@@ -390,7 +393,7 @@ public class PdfCompare extends BaseImageExtraction{
 					filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
 							+ file2updatedName[0] + i + ".png";
 					ImageIO.write(joinedImg, "png", new File(filePath));
-					Asserter.validateTrue(diffinPerecentage == 0.0,
+					asserter.validateTrue(diffinPerecentage == 0.0,
 							"PDF data differs with " + df2.format(diffinPerecentage) + "%" + " & for reference "
 									+ "<a href=" + filePath + ">link</a>");
 				}
@@ -408,7 +411,7 @@ public class PdfCompare extends BaseImageExtraction{
 					String filePath = System.getProperty("user.dir")+"\\Extract_Images\\" + file1updatedName[0]
 							+ "_" + file2updatedName[0] + i + ".png";
 					ImageIO.write(joinedImg, "png", new File(filePath));
-					Asserter.validateTrue(diffinPerecentage == 0.0, "PDF data differs with "
+					asserter.validateTrue(diffinPerecentage == 0.0, "PDF data differs with "
 							+ df2.format(diffinPerecentage) + "%" + " & for reference " + "<a href=" + filePath + ">link</a>");
 					break;
 						
@@ -417,7 +420,7 @@ public class PdfCompare extends BaseImageExtraction{
 		}
 		Reporter.log("Compared extracted image with reference image successfully", true);
 		
-		Asserter.validateAssert.assertAll();	
+		asserter.validateAssert.assertAll();
 	}
 
 	

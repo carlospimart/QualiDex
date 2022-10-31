@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Qualidex.iml" filepath="$PROJECT_DIR$/Qualidex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Qualidex.iml" filepath="$PROJECT_DIR$/../Qualidex.iml" />
     </modules>
   </component>
 </project>
