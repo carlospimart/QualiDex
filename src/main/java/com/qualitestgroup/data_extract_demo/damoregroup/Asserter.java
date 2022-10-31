@@ -4,40 +4,40 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.asserts.Assertion;
 
 public class Asserter {
 
-    public final Softassert validateAssert = new Softassert();
+    public Softassert validateAssert = new Softassert();
 
     private Assertion verifyAssert = new Assertion();
 
 
     //Constructor
     public Asserter() {
+    };
+
+
+    public void validateTrue(boolean condition) {
+
+        validateAssert.assertTrue(condition);
     }
 
-    ;
-
-
-    public void validateTrue(boolean val) {
-        validateAssert.assertTrue(val);
+    public void validateTrue(boolean condition, String message) {
+        validateAssert.assertTrue(condition, message);
     }
 
-    public void validateTrue(boolean val, String str) {
-        validateAssert.assertTrue(val, str);
+    public void validateFalse(boolean condition) {
+        validateAssert.assertFalse(condition);
     }
 
-    public void validateFalse(boolean val) {
-        validateAssert.assertFalse(val);
+    public void validateFalse(boolean condition, String message) {
+        validateAssert.assertFalse(condition, message);
     }
 
-    public void validateFalse(boolean val, String str) {
-        validateAssert.assertFalse(val, str);
-    }
-
-    public void validateCondition(String actual, String expected) {
-        validateAssert.assertEquals(actual, expected);
+    public boolean validateCondition(String actual, String expected) {
+        return actual.toLowerCase().equals(expected.toLowerCase());
     }
 
     public void validateContainsCondition(String actual, String expected) {
@@ -47,8 +47,7 @@ public class Asserter {
         } else {
             validateAssert.assertEquals(actual, expected);
         }
-
-    }
+    };
 
     public void validateContainsCondition(String actual, String expected, String message) {
 

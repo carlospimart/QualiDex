@@ -13,11 +13,11 @@ import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
 public class Unit_Test {
 
 	private QualidexLibrary qualidexLibrary = new QualidexLibrary();
-	private  String Pdf = "C:\\PDF\\englishgrammarbook.pdf";
-	private String ExcelPath = "C:\\PDF\\TestExcel.xlsx";
-	private String PDF2 = "C:\\PDF\\German.pdf";
-	private  String PDF = "C:\\PDF\\FoodhabitsofUttarakhandv1.pdf";
-	private  String refImage = "C:\\PDF\\image03.png";
+	private  String Pdf = "src\\test\\resources\\englishgrammarbook.pdf";
+	private String ExcelPath = "src\\test\\resources\\TestExcel.xlsx";
+	private String PDF2 = "src\\test\\resources\\German.pdf";
+	private  String PDF = "src\\test\\resources\\FoodhabitsofUttarakhandv1.pdf";
+	private  String refImage = "src\\test\\resources\\mage03.png";
 	private  String value = "Versicherung";
 	private  String formatText = "Angebot" ;
 	private  String formatTextFontstyle = "LiberationSansNarrow-Bold";
@@ -57,9 +57,9 @@ public class Unit_Test {
 	public  void qualidexLibraryTest1() {
 
 		try {
-			Reporter.log("Set Excel location");
-			qualidexLibrary.setExcelLocation(ExcelPath);
-			Reporter.log("Excel location has been set and start finding excel data in PDF");
+//			Reporter.log("Set Excel location");
+			//qualidexLibrary.setExcelLocation(ExcelPath);
+//			Reporter.log("Excel location has been set and start finding excel data in PDF");
 
 			// List<>
 			List<String> validationValues = QualidexLibrary.readCellValues(ExcelPath, sheet, cellNumber);

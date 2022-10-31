@@ -63,7 +63,7 @@ public class QualidexLibrary {
 	private static String PdfPath;
 	private static String headerCoords;
 	private static String footerCoords;
-	private static Asserter asserter = new Asserter();
+	private  Asserter asserter = new Asserter();
 
 	//Constructor
 
@@ -397,7 +397,7 @@ public class QualidexLibrary {
 	 * @return - Boolean True or False
 	 */
 	@SuppressWarnings("unused")
-	private static boolean existsInFooter(String value) {
+	private  boolean existsInFooter(String value) {
 		boolean found = false;
 		try {
 			File file1 = new File(PDFToText);
@@ -451,7 +451,7 @@ public class QualidexLibrary {
 	 * @return - Boolean True or False
 	 */
 	@SuppressWarnings("unused")
-	private static boolean isEmptyHeader() {
+	private  boolean isEmptyHeader() {
 		boolean found = false;
 		try {
 			File file1 = new File(PDFToText);
@@ -507,7 +507,7 @@ public class QualidexLibrary {
 	 */
 
 	@SuppressWarnings("unused")
-	private static boolean isEmptyFooter() {
+	private  boolean isEmptyFooter() {
 		boolean found = false;
 		try {
 
@@ -594,7 +594,7 @@ public class QualidexLibrary {
 					new File(".\\pdtextcreater"));
 			process.waitFor();
 
-			PdfToText = TextUTF16LEToTextUTF8("C:\\PDF\\pdtxtoutput.txt");
+			PdfToText = TextUTF16LEToTextUTF8("src\\test\\resources\\output\\pdtxtoutput.txt");
 
 		} catch (Exception e) {
 			e.printStackTrace();

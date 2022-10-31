@@ -156,7 +156,7 @@
 				<version>3.3</version>
 				<configuration>
 					<fork>true</fork>
-					<executable>C:\Program Files\Java\jdk1.8.0_291\bin\javac.exe</executable>
+					<executable>C:\Users\stewart.jumbe\.jdks\corretto-1.8.0_352-1\bin\javac.exe</executable>
 				</configuration>
 			</plugin>
 
