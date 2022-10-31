@@ -1,4 +1,4 @@
-package com.qualitestgroup.data_extract_demo;
+package test.java.com.qualitestgroup.data_extract_demo;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,13 +26,12 @@ import org.xml.sax.SAXException;
 
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
-import com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction;
-import com.qualitestgroup.dataextract.pdf.PDFOpener;
-import com.qualitestgroup.dataextract.pdf.extraction.PDFText2XML;
+import main.java.com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction;
+import main.java.com.qualitestgroup.dataextract.pdf.PDFOpener;
+import main.java.com.qualitestgroup.dataextract.pdf.extraction.PDFText2XML;
 import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
 
-
-public class PdfCompare {
+public class PdfCompare extends BaseImageExtraction{
 
 	private static final Log LOG = LogFactory.getLog(PdfCompare.class);
 	private final static Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
@@ -375,7 +374,7 @@ public class PdfCompare {
 							.read(new File("Extract_Images\\" + file2updatedName[0] + "_" + i + ".png"));
 					
 					//Base Image Compare
-					joinedImg = com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction.compareWithBaseImage(img2, img1);
+					joinedImg = compareWithBaseImage(img2, img1);
 					
 					String filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
 							+ file2updatedName[0] + i + ".png";
@@ -386,7 +385,7 @@ public class PdfCompare {
 							.read(new File("Extract_Images\\" + file1updatedName[0] + "_"
 									+ file2updatedName[0] + i + ".png"));
 					
-					joinedImg = com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction.joinBufferedImage(img1, img2);
+					joinedImg = main.java.com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction.joinBufferedImage(img1, img2);
 
 					filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
 							+ file2updatedName[0] + i + ".png";
@@ -404,7 +403,7 @@ public class PdfCompare {
 					BufferedImage img2 = ImageIO
 							.read(new File("Extract_Images\\" + file2updatedName[0] + "_" + i + ".png"));
 					
-					BufferedImage joinedImg = com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction.compareWithBaseImage(img1, img2);
+					BufferedImage joinedImg = compareWithBaseImage(img1, img2);
 					
 					String filePath = System.getProperty("user.dir")+"\\Extract_Images\\" + file1updatedName[0]
 							+ "_" + file2updatedName[0] + i + ".png";

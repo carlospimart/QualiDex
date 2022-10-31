@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2017-2018. QualiTest Software Testing Limited.
  */
-package com.qualitestgroup.dataextract.utilities;
+package main.java.com.qualitestgroup.dataextract.utilities;
 
 import java.io.File;
 import java.net.URL;
