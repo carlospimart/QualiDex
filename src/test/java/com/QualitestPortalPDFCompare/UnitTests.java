@@ -1,12 +1,18 @@
 package test.java.com.QualitestPortalPDFCompare;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
-import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
-import main.java.com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction;
-import main.java.com.qualitestgroup.dataextract.pdf.PDFOpener;
-import main.java.com.qualitestgroup.dataextract.pdf.extraction.PDFText2XML;
-import main.java.com.qualitestgroup.dataextract.utilities.ComparisonMode;
-import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -19,22 +25,20 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.xml.sax.SAXException;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.logging.Logger;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
+import main.java.com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction;
+import main.java.com.qualitestgroup.dataextract.pdf.PDFOpener;
+import main.java.com.qualitestgroup.dataextract.pdf.extraction.PDFText2XML;
+import main.java.com.qualitestgroup.dataextract.utilities.ComparisonMode;
+import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
+
 
 
 public class UnitTests {
 
 	private static final Log LOG = LogFactory.getLog(UnitTests.class);
 	private final static Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
+
 	private PDFOpener opener;
 	private PDFText2XML text2XML;
 	public PDF2XMLComparator xmlComparator = new PDF2XMLComparator();
@@ -44,10 +48,12 @@ public class UnitTests {
 	static String leftStripped = null;
 	static String rightStripped = null;
 	static SoftAssert softAssertion = new SoftAssert();
+	private Asserter asserter;
+
+
 	public static String firstXmlDoc = getConfigProperty("firstXmlDocFile");
 	public static String secondXmlDoc = getConfigProperty("secondXmlDocFile");
 	private static DecimalFormat df2 = new DecimalFormat("#.##");
-	private final Asserter asserter = new Asserter();
 
 	@BeforeTest
 	public void setup() throws IOException {
@@ -264,7 +270,7 @@ public class UnitTests {
 				}
 			}
 		}
-		asserter.validateAssert.assertAll();
+		asserter.assertAll();
 	}}
 
 	private String getconfigproperty(String string) {

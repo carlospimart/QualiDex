@@ -2,29 +2,32 @@ package test.java.com.qualitestgroup.qualidexexcelutility;
 
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
-import main.java.com.qualitestgroup.dataextract.utilities.TestContext;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
+
 public class Unit_Test2 {
-    static String Pdf = "C:\\PDF\\englishgrammarbook.pdf";
-    static String ExcelPath = "C:\\PDF\\TestExcel.xlsx";
-    static String PDF2 = "C:\\PDF\\German.pdf";
-    private static String PDF = "C:\\PDF\\FoodhabitsofUttarakhandv1.pdf";
-    private static String refImage = "C:\\PDF\\image03.png";
-    private static String value = "Versicherung";
-    private static String formatText = "Angebot";
-    private static String formatTextFontstyle = "LiberationSansNarrow-Bold";
-    private static String formatTextFontSize = "14";
+
+    private final String Pdf = "src\\test\\resources\\englishgrammarbook.pdf";
+    private final String ExcelPath = "src\\test\\resources\\TestExcel.xlsx";
+    private final String PDF2 = "src\\test\\resources\\German.pdf";
+    private final String PDFwithImages = "src\\test\\resources\\FoodhabitsofUttarakhandv1.pdf";
+    private final String refImage = "src\\test\\resources\\mage03.png";
+    private final String value = "Versicherung";
+    private final String formatText = "Angebot";
+    private final String formatTextFontstyle = "LiberationSansNarrow-Bold";
+    private final String formatTextFontSize = "14";
     private static String sheet = "Sheet3";
-    private static int cellNumber = 1;
+    private  String sheetName = "Sheet3";
+   // private  int cellNumber = 1;
+    private String columnWanted = "Test content";
     private static String filterCellValue = "Test2";
     private static int filterColumnNumber = 0;
     private static int filterCellNumber = 1;
-    private final QualidexLibrary qualidexLibrary = new QualidexLibrary();
+    public QualidexLibrary qualidexLibrary;
     private final Asserter asserter = new Asserter();
 
     @BeforeClass
@@ -55,11 +58,11 @@ public class Unit_Test2 {
 
         try {
             Reporter.log("Set Excel location");
-//			hooks.qualidexLibrary.setExcelLocation(ExcelPath);
+//			qualidexLibrary.setExcelLocation(ExcelPath);
             Reporter.log("Excel location has been set and start finding excel data in PDF");
 
             // List<>
-            List<String> validationValues = qualidexLibrary.readCellValues(ExcelPath, sheet, cellNumber);
+            List<String> validationValues = qualidexLibrary.readCellValues(ExcelPath, sheetName, columnWanted);
             for (String values : validationValues) {
                 Reporter.log("Validation Text : " + values);
                 if (qualidexLibrary.findValuesInPdf(values)) {
@@ -74,7 +77,7 @@ public class Unit_Test2 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        asserter.validateAssert.assertAll();
+        asserter.assertAll();
 
     }
 
@@ -82,8 +85,10 @@ public class Unit_Test2 {
     public void qualidexLibraryTest2() {
         try {
             Reporter.log("Set Excel location");
-//			hooks.qualidexLibrary.setExcelLocation(ExcelPath);
+//			qualidexLibrary.setExcelLocation(ExcelPath);
             Reporter.log("Excel location has been set and start finding excel data in PDF");
+
+
             List<String> validationValuess = qualidexLibrary.applyFilterAndStoreCellValues(ExcelPath, sheet, filterCellValue, filterColumnNumber, filterCellNumber);
             for (String values : validationValuess) {
                 Reporter.log("Validation Text : " + values);
@@ -103,23 +108,23 @@ public class Unit_Test2 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        asserter.validateAssert.assertAll();
+        asserter.assertAll();
     }
 
 
 
     /*
-     * @Test public static void hooks.qualidexLibraryTest2() { try {
+     * @Test public static void qualidexLibraryTest2() { try {
      * Reporter.log("Set Header coordinates"); //
-     * hooks.qualidexLibrary.setHeaderCoords("117,");
-     * hooks.qualidexLibrary.setHeaderCoords("847.453,");
+     * qualidexLibrary.setHeaderCoords("117,");
+     * qualidexLibrary.setHeaderCoords("847.453,");
      * Reporter.log("Header coordinates set successfully");
-     * Reporter.log("Check is header empty?"); if (hooks.qualidexLibrary.isEmptyHeader())
+     * Reporter.log("Check is header empty?"); if (qualidexLibrary.isEmptyHeader())
      * { Reporter.log("Header is not empty"); } else {
      * Reporter.log("Header is empty"); }
      * Reporter.log("validate content in Header"); //
-     * if(hooks.qualidexLibrary.existsInHeader("Head")) if
-     * (hooks.qualidexLibrary.existsInHeader("Versicherung 56-5013692")) { //
+     * if(qualidexLibrary.existsInHeader("Head")) if
+     * (qualidexLibrary.existsInHeader("Versicherung 56-5013692")) { //
      * Reporter.log("Head exists in Header");
      * Reporter.log("Versicherung 56-5013692 exists in Header"); } else { //
      * Reporter.log("Head doesnot exists in Header");
@@ -128,22 +133,22 @@ public class Unit_Test2 {
 
 			/*
 			 * Reporter.log("Set footer coordinates");
-			 * hooks.qualidexLibrary.setFooterCoords("90, 108.45,");
+			 * qualidexLibrary.setFooterCoords("90, 108.45,");
 			 * Reporter.log("footer coordinates set successfully");
 			 *
-			 * Reporter.log("Check is footer empty?"); if(hooks.qualidexLibrary.isEmptyFooter()) {
+			 * Reporter.log("Check is footer empty?"); if(qualidexLibrary.isEmptyFooter()) {
 			 * Reporter.log("Footer is not empty"); } else {
 			 * Reporter.log("Footer is empty"); }
 			 *
 			 * Reporter.log("validate content in footer");
-			 * if(hooks.qualidexLibrary.existsInFooter("Foot")) {
+			 * if(qualidexLibrary.existsInFooter("Foot")) {
 			 * Reporter.log("Foot exists in footer"); } else {
 			 * Reporter.log("Footer doesnot is exists in footer"); }
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		hooks.asserter.validateAssert.assertAll();
+		asserter.validateAssert.assertAll();
 
 	}*/
 
@@ -153,13 +158,13 @@ public class Unit_Test2 {
 
             // Find the occurrence of given text
             Reporter.log(" Find the occurence of text : " + value);
-            if (qualidexLibrary.findOccurence(value) > 0) {
+            if (qualidexLibrary.findOccurrence(value) > 0) {
 
-                asserter.validateTrue((qualidexLibrary.findOccurence(value) > 0), value + " text found " + qualidexLibrary.findOccurence(value) + " times in a PDF");
-                Reporter.log(value + " text found " + qualidexLibrary.findOccurence(value) + " times in a PDF");
+                asserter.validateTrue((qualidexLibrary.findOccurrence(value) > 0), value + " text found " + qualidexLibrary.findOccurrence(value) + " times in a PDF");
+                Reporter.log(value + " text found " + qualidexLibrary.findOccurrence(value) + " times in a PDF");
             } else {
 
-                asserter.validateTrue((qualidexLibrary.findOccurence(value) > 0), value + " is not present in a PDF ");
+                asserter.validateTrue((qualidexLibrary.findOccurrence(value) > 0), value + " is not present in a PDF ");
                 Reporter.log(value + " is not present in a PDF");
             }
 
@@ -181,25 +186,25 @@ public class Unit_Test2 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        asserter.validateAssert.assertAll();
+        asserter.assertAll();
     }
 
     @Test
     public void qualidexImageTest() {
-        // hooks.qualidexLibrary.findText("Header");
+        // qualidexLibrary.findText("Header");
         Reporter.log("Finding image in PDF");
 
-        if (qualidexLibrary.findImage(PDF, refImage) == true) {
+        if (qualidexLibrary.findImage(PDFwithImages, refImage) == true) {
 
-            asserter.validateTrue(qualidexLibrary.findImage(PDF, refImage), "Image found in the PDF");
+            asserter.validateTrue(qualidexLibrary.findImage(PDFwithImages, refImage), "Image found in the PDF");
             Reporter.log("Image found in the PDF");
 
         } else {
 
-            asserter.validateTrue(qualidexLibrary.findImage(PDF, refImage), "Image not found in the PDF");
+            asserter.validateTrue(qualidexLibrary.findImage(PDFwithImages, refImage), "Image not found in the PDF");
             Reporter.log("Image not found in the PDF");
         }
-        asserter.validateAssert.assertAll();
+        asserter.assertAll();
     }
 
 }

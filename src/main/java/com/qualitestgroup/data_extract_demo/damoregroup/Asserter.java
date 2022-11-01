@@ -4,21 +4,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.asserts.Assertion;
 
 public class Asserter {
 
-    public Softassert validateAssert = new Softassert();
-
+    private CustomSoftAssert validateAssert = new CustomSoftAssert();
     private Assertion verifyAssert = new Assertion();
 
 
-    //Constructor
-    public Asserter() {
-    };
-
-
+    public void assertAll(){
+         validateAssert.assertAll();
+    }
     public void validateTrue(boolean condition) {
 
         validateAssert.assertTrue(condition);

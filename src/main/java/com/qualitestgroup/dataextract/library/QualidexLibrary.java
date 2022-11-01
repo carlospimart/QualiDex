@@ -12,8 +12,13 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.Reporter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -39,6 +44,44 @@ public class QualidexLibrary {
     private static final Logger logger = Logger.getLogger(QualidexLibrary.class.getName());
     private final QualidexBuilder qualidexBuilder = QualidexBuilder.builder().build();
     private final Asserter asserter = new Asserter();
+
+    /**
+     * This method fetch the validation content from DB
+     *
+     * @param url        - DB url
+     * @param userName   - DB user name
+     * @param password   - DB password
+     * @param tableName  - Table name
+     * @param CoulmnName - Column name
+     */
+
+    @SuppressWarnings("unused")
+    private void readFromDB(String url, String userName, String password, String tableName, String CoulmnName) {
+        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
+            while (rs.next()) {
+                // This method is not implemented
+            }
+        } catch (SQLException ex) {
+            logger.info(ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * This method helps to find the table in PDF
+     *
+     * @param PDFPath  - Path of PDF
+     * @param refTable - Path of reference table
+     * @return
+     */
+    @SuppressWarnings("unused")
+    private static boolean findTable(String PDFPath, String refTable) {
+        // This method is not implimented
+        return false;
+
+    }
 
     /**
      * This method set PDF and extract PDF content
@@ -102,21 +145,6 @@ public class QualidexLibrary {
     }
 
     /**
-     *
-     * This method sets excel path
-     *
-     * @param excelPath - Path of excel
-     * @return - Boolean True or False
-     */
-	/*public boolean setExcelLocation(String excelPath) {
-		try {
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
-	}*/
-
-    /**
      * This method reads the cell value from excel
      *
      * @param excelSheetPath - Path of excel sheet
@@ -137,7 +165,7 @@ public class QualidexLibrary {
                 cellValue = qualidexBuilder.getValue().toString();
                 logger.info(cellValue);
             }
-        } catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
+        } catch (EncryptedDocumentException | IOException e) {
             e.printStackTrace();
         }
         return cellValue;
@@ -147,25 +175,43 @@ public class QualidexLibrary {
      * This Method reads cell value from excel and returns as list of strings
      *
      * @param excelSheetPath - Path of Excel
-     * @param sheet          - Excel Sheet
-     * @param cellNumber     - cell number
+     * @param sheetName      - Excel Sheet
+     * @param columnWanted   -Column in excel sheet to analyse
      * @return string validationCellValues
      */
-    public List<String> readCellValues(String excelSheetPath, String sheet, int cellNumber) {
+    public List<String> readCellValues(String excelSheetPath, String sheetName, String columnWanted) throws FileNotFoundException {
         List<String> validationCellValues = new ArrayList<>();
-        String cellValue;
-        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(excelSheetPath))) {
-            qualidexBuilder.setWorkbook(WorkbookFactory.create(bis));
-            qualidexBuilder.setSheet(qualidexBuilder.getWorkbook().getSheet(sheet));
-            int noOfRows = qualidexBuilder.getSheet().getLastRowNum();
-            for (int i = 1; i <= noOfRows; i++) {
-                qualidexBuilder.setValue(qualidexBuilder.getSheet().getRow(i).getCell(cellNumber));
-                cellValue = qualidexBuilder.getValue().toString();
-                byte[] bytes = cellValue.getBytes(StandardCharsets.UTF_8);
-                String cellValues = new String(bytes);
-                validationCellValues.add(cellValues);
+
+        try (FileInputStream fis = new FileInputStream(new File(excelSheetPath))) {
+            //creating Workbook instance that refers to .xlsx file
+            XSSFWorkbook wb = new XSSFWorkbook(fis);
+            XSSFSheet sheet1 = wb.getSheetAt(0);//creating a Sheet object to retrieve object
+            int noOfRows = wb.getSheet(sheet1.getSheetName()).getPhysicalNumberOfRows();
+
+            Integer columnIndex = null;
+            List<Cell> listWithCellsData = new ArrayList<Cell>(); //To hold data(non-null cells) from the column of interest
+            Row row1 = sheet1.getRow(0);//Getting the first Cell
+
+            //iterating throw rows to get the columnIndex of the column of interest
+            for (Cell cell : row1) {
+                System.out.println("Cell name: " + cell.toString());
+                if (cell.getStringCellValue().equals(columnWanted)) {
+                    columnIndex = cell.getColumnIndex();
+                }
             }
-        } catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
+            // collecting cell data down column of interest and store it
+            if (columnIndex != null) {
+                for (Row row2 : sheet1) {
+                    Cell cell = row2.getCell(columnIndex);
+                    if (cell != null || cell.getCellType() == CellType.BLANK) {
+                        validationCellValues.add(cell.toString());
+                        //System.out.println(cell);
+                    }
+                }
+            } else {
+                Reporter.log("could not find column " + columnWanted + " in: " + excelSheetPath);
+            }
+        } catch (EncryptedDocumentException | IOException e) {
             e.printStackTrace();
         }
         return validationCellValues;
@@ -201,7 +247,7 @@ public class QualidexLibrary {
                     validationCellValues.add(cellValues);
                 }
             }
-        } catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
+        } catch (EncryptedDocumentException | IOException e) {
             e.printStackTrace();
         }
         return validationCellValues;
@@ -238,15 +284,12 @@ public class QualidexLibrary {
                         }
                     }
                     break;
-
                 }
-
             }
             if ((st = br.readLine()) == null) {
                 logger.info("Header not found");
                 asserter.validateTrue((st = br.readLine()) != null, "Header not found");
                 found = false;
-
             }
             br.close();
         } catch (Exception e) {
@@ -259,30 +302,30 @@ public class QualidexLibrary {
     /**
      * This method finds the given string values in Pdf
      *
-     * @param value - Text Value which being compared against PDF
+     * @param referenceString - Text Value which being compared against PDF
      * @return boolean result
      */
 
-    public boolean findValuesInPdf(String value) {
+
+    public boolean findValuesInPdf(String referenceString) {
         boolean result = false;
         try {
-            String st1 = value;
-            logger.info("Validation text is : " + st1);
+            logger.info("Validation text is : " + referenceString);
             {
                 BufferedReader br = new BufferedReader(new StringReader(qualidexBuilder.getPdfToText()));
-                String st;
+                String pdfString;
                 // Condition holds true till
-                while ((st = br.readLine()) != null) {
-                    if (!(st.contains(st1))) {
+                while ((pdfString = br.readLine()) != null) {
+                    if (!(pdfString.contains(referenceString))) {
                         continue;
                     } else {
-                        logger.info("Found the match: " + st1 + " is present in the PDF");
+                        logger.info("**Found the match: " + referenceString + " is present in the PDF");
                         result = true;
                         break;
                     }
                 }
-                if ((st = br.readLine()) == null) {
-                    logger.info("match not found");
+                if ((pdfString = br.readLine()) == null) {
+                    logger.info("Match not found " + referenceString);
                     result = false;
                 }
                 br.close();
@@ -310,9 +353,7 @@ public class QualidexLibrary {
                 String regexPattern = (qualidexBuilder.getFooterCoords());
                 Pattern pattern = Pattern.compile(regexPattern);
                 Matcher matcher = pattern.matcher(st);
-
                 String result = value;
-
                 if (matcher.find()) {
                     if (found = true) {
                         logger.info("Footer is present");
@@ -326,17 +367,13 @@ public class QualidexLibrary {
                         }
                     }
                     break;
-
                 }
-
                 if ((st = br.readLine()) == null) {
                     logger.info("Footer not found");
                     asserter.validateTrue((st = br.readLine()) != null, "Footer not found");
                     found = false;
                 }
-
             }
-            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -360,29 +397,22 @@ public class QualidexLibrary {
                     String regexPattern = (qualidexBuilder.getHeaderCoords());
                     Pattern pattern = Pattern.compile(regexPattern);
                     Matcher matcher = pattern.matcher(st);
-
                     if (matcher.find()) {
                         found = true;
                         logger.info("Header is present");
                         logger.info(st);
                         break;
-
                     } else {
                         continue;
-
                     }
                 }
-
             }
-
             if ((st = br.readLine()) == null) {
                 found = false;
                 logger.info(st);
                 logger.info("Header not found");
                 asserter.validateTrue((st = br.readLine()) != null, "Header not found");
-
             }
-            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -403,7 +433,6 @@ public class QualidexLibrary {
             // Condition holds true till
             // there is character in a string
             while ((st = br.readLine()) != null) {
-
                 {
                     String regexPattern = (qualidexBuilder.getFooterCoords());
                     Pattern pattern = Pattern.compile(regexPattern);
@@ -412,30 +441,22 @@ public class QualidexLibrary {
                         found = true;
                         logger.info("Footer is present");
                         logger.info(st);
-
                         break;
-
                     } else {
                         continue;
-
                     }
-
                 }
-
             }
-
             if ((st = br.readLine()) == null) {
                 found = false;
                 logger.info(st);
                 logger.info("Footer is empty");
                 asserter.validateTrue((st = br.readLine()) != null, "Footer not found");
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return found;
-
     }
 
     /**
@@ -464,12 +485,11 @@ public class QualidexLibrary {
         try {
             Process process = Runtime.getRuntime().exec("cmd /c start /wait java -Xmx2448m -cp  . pdf.PDFTextExtractor " + qualidexBuilder.getPdfPath(), null, new File(".\\pdtextcreater"));
             process.waitFor();
-            PdfToText = TextUTF16LEToTextUTF8("C:\\PDF\\pdtxtoutput.txt");
+            PdfToText = TextUTF16LEToTextUTF8("src\\test\\resources\\output\\pdtxtoutput.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
         return PdfToText;
-
     }
 
     /**
@@ -502,55 +522,28 @@ public class QualidexLibrary {
     /**
      * This method finds the occurrence of given string value in PDF
      *
-     * @param value - Text which is being validated
+     * @param referenceString - Text which is being validated
      * @return - count of string in PDF
      */
     @SuppressWarnings("resource")
-    public int findOccurence(String value) {
+    public int findOccurrence(String referenceString) {
         int count = 0;
         try {
-            logger.info("Validation text is : " + value);
-            Pattern pattern = Pattern.compile(value);
+            logger.info("Validation text is : " + referenceString);
+            Pattern pattern = Pattern.compile(referenceString);
             Matcher matcher = pattern.matcher(qualidexBuilder.getPdfToText());
             while (matcher.find()) {
                 count++;
             }
             if (count > 0) {
-                logger.info("Validated text " + value + " appears " + count + " times in a PDF");
+                logger.info("**Validated text " + referenceString + " appears " + count + " times in a PDF");
             } else {
-                logger.info("Text" + value + " not found in PDF");
+                logger.info("Text" + referenceString + " not found in PDF");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return count;
-
-    }
-
-    /**
-     * This method fetch the validation content from DB
-     *
-     * @param url        - DB url
-     * @param userName   - DB user name
-     * @param password   - DB password
-     * @param tableName  - Table name
-     * @param CoulmnName - Column name
-     */
-
-    @SuppressWarnings("unused")
-    private static void readFromDB(String url, String userName, String password, String tableName, String CoulmnName) {
-
-        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName);
-            while (rs.next()) {
-                // This method is not implemented
-            }
-        } catch (SQLException ex) {
-            logger.info(ex.getMessage());
-            ex.printStackTrace();
-        }
     }
 
     /**
@@ -573,32 +566,18 @@ public class QualidexLibrary {
     }
 
     /**
-     * This method helps to find the table in PDF
-     *
-     * @param PDFPath  - Path of PDF
-     * @param refTable - Path of reference table
-     * @return
-     */
-    @SuppressWarnings("unused")
-    private static boolean findTable(String PDFPath, String refTable) {
-        // This method is not implimented
-        return false;
-
-    }
-
-    /**
      * This methods helps to find the image in the PDF
      *
-     * @param PDFPath      - Path of PDF
+     * @param pdfPath      - Path of PDF
      * @param refImagePath - Path of reference image
      * @return - boolean result
      */
-    public boolean findImage(String PDFPath, String refImagePath) {
+    public boolean findImage(String pdfPath, String refImagePath) {
         boolean result = false;
         boolean results = false;
         try {
             // Extract images from the PDF
-            imageExtraction(PDFPath);
+            imageExtraction(pdfPath);
             File dir = new File(".\\Images\\");
             File[] directoryListing = dir.listFiles();
             ArrayList<Boolean> list = new ArrayList<Boolean>();
@@ -614,9 +593,7 @@ public class QualidexLibrary {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return results;
-
     }
 
     /**
@@ -632,10 +609,8 @@ public class QualidexLibrary {
         }
         PDDocument document = PDDocument.load(new File(PDF));
         int NoOfPage = document.getNumberOfPages();
-
         for (int page = 0; page < NoOfPage; page++) {
             PDPage pdfpage = document.getPage(page);
-
             int i = 1;
             PDResources pdResources = pdfpage.getResources();
             for (COSName c : pdResources.getXObjectNames()) {
@@ -644,7 +619,6 @@ public class QualidexLibrary {
                     File file = new File(".\\Images\\page_" + page + "_image_" + i + ".png");
                     i++;
                     ImageIO.write(((org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) o).getImage(), "png", file);
-
                 }
             }
         }
@@ -660,7 +634,6 @@ public class QualidexLibrary {
     private boolean searchImage(String imageList, String value) {
         boolean result = false;
         try {
-
             String st = imageList;
             boolean results = st.contains(value);
             if (results == false) {
@@ -673,7 +646,6 @@ public class QualidexLibrary {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return result;
 
     }
@@ -750,11 +722,9 @@ public class QualidexLibrary {
                 logger.info("match not found");
             }
             br.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return found;
 
     }
@@ -809,7 +779,6 @@ public class QualidexLibrary {
             e.printStackTrace();
         }
         return found;
-
     }
 
     private void htmlFileCreation() {
@@ -847,7 +816,6 @@ public class QualidexLibrary {
         } else {
             diffFinalReport.add(new Diff(Operation.DELETE, qualidexBuilder.getTextInEarlierDiff()));
         }
-
     }
 
     private void earlyDiffStateForEqual(List<String> newlyAddedString, LinkedList<diff_match_patch.Diff> diffFinalReport) {
@@ -991,7 +959,6 @@ public class QualidexLibrary {
                 }
                 qualidexBuilder.setTextInEarlierDiff(qualidexBuilder.getPdfDiff().text);
             }
-
             String result = dmp.diff_prettyHtml(diffFinalReport);
             Path path = Paths.get(".\\Difference.html");
             // with path , content & standard charsets
@@ -1052,7 +1019,6 @@ public class QualidexLibrary {
         List<String> deletedStrings = Arrays.asList("");
         List<String> newlyAdded = Arrays.asList("");
         return qualiDexCompare(basePDF, refPDF, diff, deletedStrings, newlyAdded);
-
     }
 
     /**

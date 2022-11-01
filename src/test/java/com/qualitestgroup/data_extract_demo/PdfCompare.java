@@ -14,13 +14,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 
-import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Softassert;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.CustomSoftAssert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.xml.sax.SAXException;
@@ -34,7 +33,7 @@ import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
 
 public class PdfCompare extends BaseImageExtraction{
 
-	private final Softassert validateAssert = new Softassert();
+	private final CustomSoftAssert validateAssert = new CustomSoftAssert();
 	private static final Log LOG = LogFactory.getLog(PdfCompare.class);
 	private final static Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
 
@@ -420,7 +419,7 @@ public class PdfCompare extends BaseImageExtraction{
 		}
 		Reporter.log("Compared extracted image with reference image successfully", true);
 		
-		asserter.validateAssert.assertAll();
+		asserter.assertAll();
 	}
 
 	
