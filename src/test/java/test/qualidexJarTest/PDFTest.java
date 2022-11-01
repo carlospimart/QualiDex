@@ -1,8 +1,7 @@
 package test.java.test.qualidexJarTest;
 
-import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
+
 import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
-import main.java.com.qualitestgroup.dataextract.utilities.TestContext;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;

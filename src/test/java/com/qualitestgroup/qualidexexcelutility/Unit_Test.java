@@ -10,8 +10,6 @@ import java.util.List;
 
 
 public class Unit_Test {
-
-    private final QualidexLibrary qualidexLibrary = new QualidexLibrary();
     private final String Pdf = "src\\test\\resources\\englishgrammarbook.pdf";
     private final String excelPath = "src\\test\\resources\\TestExcel.xlsx";
     private final String pdfPath = "src\\test\\resources\\German.pdf";
@@ -21,15 +19,15 @@ public class Unit_Test {
     private final String formatText = "Angebot";
     private final String formatTextFontstyle = "LiberationSansNarrow-Bold";
     private final String formatTextFontSize = "14";
-    private final String sheetName = "Sheet3";
-    private final String sheet = "Sheet3";
+    private final String sheetName = "Sheet1";
+    private final String sheet = "Sheet1";
     //private  int cellNumber = 1;
     private final String filterCellValue = "Test2";
     private final int filterColumnNumber = 0;
     private final int filterCellNumber = 1;
-    private final Asserter asserter = new Asserter();
     private final String columnWanted = "Test content";
-
+    private final Asserter asserter = new Asserter();
+    private final QualidexLibrary qualidexLibrary = new QualidexLibrary();
 
     @BeforeClass
     public void initialConfig() {
@@ -52,14 +50,13 @@ public class Unit_Test {
 
     }
 
-
     @Test
     public void qualidexLibraryFindValuesInPDFTest() {
         try {
-            Reporter.log("Excel location has been set to "+ excelPath +" and start finding excel data in PDF");
+            Reporter.log("Excel location has been set to " + excelPath + " and start finding excel data in PDF");
             // List<>
             List<String> validationValues = qualidexLibrary.readCellValues(excelPath, sheetName, columnWanted);
-            for (int i =1 ; i < validationValues.size(); i++) {
+            for (int i = 1; i < validationValues.size(); i++) {
                 Reporter.log(("Validation text : " + validationValues.get(i)));
                 asserter.validateTrue(qualidexLibrary.findValuesInPdf(validationValues.get(i)), validationValues.get(i) + " is not present in the PDF");
             }
@@ -79,18 +76,13 @@ public class Unit_Test {
             List<String> validationValues = qualidexLibrary.applyFilterAndStoreCellValues(excelPath, sheet, filterCellValue, filterColumnNumber, filterCellNumber);
             for (String values : validationValues) {
                 Reporter.log("Validation Text : " + values);
-
                 if (qualidexLibrary.findValuesInPdf(values)) {
-
                     asserter.validateTrue(qualidexLibrary.findValuesInPdf(values), values + " is present in the PDF");
                     Reporter.log(values + " is present in the PDF");
-
                 } else {
-
                     asserter.validateTrue(qualidexLibrary.findValuesInPdf(values), values + " is not present in the PDF");
                     Reporter.log(values + " is not present in the PDF");
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,13 +163,7 @@ public class Unit_Test {
     public void qualidexImageTest() {
         // qualidexLibrary.findText("Header");
         Reporter.log("Finding image in PDF");
-        if (qualidexLibrary.findImage(pathOfPDFWithImages, refImagePath) == true) {
-            asserter.validateTrue(qualidexLibrary.findImage(pathOfPDFWithImages, refImagePath), "Image found in the PDF");
-            Reporter.log("Image found in the PDF");
-        } else {
-            asserter.validateTrue(qualidexLibrary.findImage(pathOfPDFWithImages, refImagePath), "Image not found in the PDF");
-            Reporter.log("Image not found in the PDF");
-        }
+        asserter.validateTrue(qualidexLibrary.findImage(pathOfPDFWithImages, refImagePath), "Image not found in the PDF");
         asserter.assertAll();
     }
 
