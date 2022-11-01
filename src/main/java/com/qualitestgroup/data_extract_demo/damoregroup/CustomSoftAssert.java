@@ -8,9 +8,9 @@ import org.testng.asserts.IAssert;
 import org.testng.asserts.SoftAssert;
 import org.testng.collections.Maps;
 
-public class Softassert extends SoftAssert {
+public class CustomSoftAssert extends SoftAssert {
 
-	public Softassert() {
+	public CustomSoftAssert() {
 	}
 
 	public static final Map<AssertionError, IAssert<?>> m_errors = Maps.newLinkedHashMap();

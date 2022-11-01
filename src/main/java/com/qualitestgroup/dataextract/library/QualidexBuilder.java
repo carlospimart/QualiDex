@@ -17,6 +17,7 @@ public class QualidexBuilder {
     private Cell value;
     private String pdfToText;
     private String pdfPath;
+    private int matchCounter =0;
     private String headerCoords;
     private String footerCoords;
     private String pdfOperation;
