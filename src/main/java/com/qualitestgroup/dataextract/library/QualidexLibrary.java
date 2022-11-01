@@ -36,9 +36,9 @@ import java.util.regex.Pattern;
  * @author pavan.kumar
  */
 public class QualidexLibrary {
-    private static final Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
-    QualidexBuilder qualidexBuilder = QualidexBuilder.builder().build();
-    private Asserter asserter;
+    private static final Logger logger = Logger.getLogger(QualidexLibrary.class.getName());
+    private final QualidexBuilder qualidexBuilder = QualidexBuilder.builder().build();
+    private final Asserter asserter = new Asserter();
 
     /**
      * This method set PDF and extract PDF content
@@ -46,8 +46,12 @@ public class QualidexLibrary {
      * @param pdfPath - path of the pdf
      */
     public void setPDFLocationAndExtract(String pdfPath) {
-        qualidexBuilder.setPdfPath(pdfPath);
-        qualidexBuilder.setPdfToText(pdfExtracter());
+        try {
+            qualidexBuilder.setPdfPath(pdfPath);
+            qualidexBuilder.setPdfToText(pdfExtractor(pdfPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -435,23 +439,21 @@ public class QualidexLibrary {
     }
 
     /**
-     * This method returns the number of pages in PDF
+     * This method returns the number of pages in pdf
      *
-     * @param PDF - Path of Pdf
+     * @param pdf - Path of Pdf
      * @return count - number of pages in pdf
      */
-    public int returnNumberOfPages(String PDF) {
-        int count = 0;
+    public int returnNumberOfPages(String pdf) {
+        PDDocument doc = null;
         try {
-            PDDocument doc = PDDocument.load(new File(PDF));
-            count = doc.getNumberOfPages();
-            logger.info("Number of pages in Pdf :- " + count);
+            doc = PDDocument.load(new File(pdf));
+            logger.info("Number of pages in Pdf :- " + doc.getNumberOfPages());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return count;
-
+        assert doc != null;
+        return doc.getNumberOfPages();
     }
 
     /**
@@ -561,18 +563,8 @@ public class QualidexLibrary {
     public boolean isPdfEmpty(String pdfpath) {
         boolean found = false;
         try {
-            // Fetch the PDF
-            File pdf_file = new File(pdfpath);
-            PDDocument document = PDDocument.load(pdf_file);
-            PDFTextStripper pdfstripper = new PDFTextStripper();
-            String text = pdfstripper.getText(document);
-            if (text != null) {
-                logger.info("Text is Present in PDF");
-                found = true;
-            } else {
-                logger.info("Text isn't Present in PDF");
-                found = false;
-            }
+            found = pdfExtractor(pdfpath) != null;
+            asserter.validateTrue(found, "PDF is empty");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -912,24 +904,29 @@ public class QualidexLibrary {
         } else {
             List<String> baseString = new ArrayList<String>();
             Set<String> keys = diff.keySet();
-            for (String k : keys) {
-                baseString.add(k);
-                System.out.println("key: " + k);
+            for (String key : keys) {
+                baseString.add(key);
+                System.out.println("key: " + key);
             }
-            for (String s : baseString) {
-                if (qualidexBuilder.getTextInEarlierDiff().contains(s)) {
-                    if (qualidexBuilder.getPdfDiff().text.contains(diff.get(s))) {
-                        if (loopCount > 0) {
-                            qualidexBuilder.getRegexForSplit().append("|(");
-                            regexForSplitModified.append("|(");
-                        }
-                        qualidexBuilder.getRegexForSplit().append("(?<=").append(s).append(")|(?=").append(s).append("))");
-                        regexForSplitModified.append("(?<=").append(diff.get(s)).append(")|(?=").append(diff.get(s)).append("))");
-                        loopCount++;
+            baseString(baseString, loopCount, regexForSplitModified, diff);
+            baseModifyValues(loopCount, regexForSplitModified, baseString, diff, diffFinalReport);
+        }
+    }
+
+    private void baseString(List<String> baseString, int loopCount,
+                            StringBuilder regexForSplitModified, Map<String, String> diff) {
+        for (String baseStr : baseString) {
+            if (qualidexBuilder.getTextInEarlierDiff().contains(baseStr)) {
+                if (qualidexBuilder.getPdfDiff().text.contains(diff.get(baseStr))) {
+                    if (loopCount > 0) {
+                        qualidexBuilder.getRegexForSplit().append("|(");
+                        regexForSplitModified.append("|(");
                     }
+                    qualidexBuilder.getRegexForSplit().append("(?<=").append(baseStr).append(")|(?=").append(baseStr).append("))");
+                    regexForSplitModified.append("(?<=").append(diff.get(baseStr)).append(")|(?=").append(diff.get(baseStr)).append("))");
+                    loopCount++;
                 }
             }
-            baseModifyValues(loopCount, regexForSplitModified, baseString, diff, diffFinalReport);
         }
     }
 
@@ -950,27 +947,18 @@ public class QualidexLibrary {
         final String DELETE = "DELETE";
         final String PDFText1;
         final String PDFText2;
+        LinkedList<diff_match_patch.Diff> diffFinalReport = new LinkedList<>();
         try {
-            PDFText1 = PDF_Extractor(basePDF);
-            PDFText2 = PDF_Extractor(refPDF);
+            PDFText1 = pdfExtractor(basePDF);
+            PDFText2 = pdfExtractor(refPDF);
             htmlFileCreation();
             diff_match_patch dmp = new diff_match_patch();
             LinkedList<diff_match_patch.Diff> pdfDifferences = dmp.diff_main(PDFText1, PDFText2);
             dmp.diff_cleanupEfficiency(pdfDifferences);
-            LinkedList<diff_match_patch.Diff> diffFinalReport = new LinkedList<>();
-
             for (int i = 0; i < pdfDifferences.size(); i++) {
                 qualidexBuilder.setPdfDiff(pdfDifferences.get(i));
                 System.out.println("Printing pdfDifferences: " + qualidexBuilder.getPdfDiff().text);
-                String pdfOperations = qualidexBuilder.getPdfDiff().toString().replace(qualidexBuilder.getPdfDiff().text, "");
-                if (pdfOperations.contains(EQUAL)) {
-                    qualidexBuilder.setPdfOperation(EQUAL);
-                } else if (pdfOperations.contains(INSERT)) {
-                    qualidexBuilder.setPdfOperation(INSERT);
-                } else {
-                    qualidexBuilder.setPdfOperation(DELETE);
-                }
-                switch (qualidexBuilder.getPdfOperation()) {
+                switch (qualidexBuilder.getPdfDiff().operation) {
                     case EQUAL:
                         System.out.println(" ");
                         if (qualidexBuilder.getEarlierDiffState().equals(DELETE)) {
@@ -1107,8 +1095,8 @@ public class QualidexLibrary {
      * @throws IOException
      */
 
-    private String PDF_Extractor(String PDF) throws IOException {
-        File pdf_file = new File(PDF);
+    private String pdfExtractor(String pdf) throws IOException {
+        File pdf_file = new File(pdf);
         PDDocument document = PDDocument.load(pdf_file);
         PDFTextStripper pdfstripper = new PDFTextStripper();
         String text = pdfstripper.getText(document);

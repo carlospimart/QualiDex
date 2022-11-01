@@ -1,5 +1,25 @@
 package test.java.com.QualitestPortalPDFCompare;
 
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
+import main.java.com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction;
+import main.java.com.qualitestgroup.dataextract.pdf.PDFOpener;
+import main.java.com.qualitestgroup.dataextract.pdf.extraction.PDFText2XML;
+import main.java.com.qualitestgroup.dataextract.utilities.ComparisonMode;
+import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.Reporter;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import org.xml.sax.SAXException;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,36 +30,11 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.util.SystemOutLogger;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.Reporter;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-import org.xml.sax.SAXException;
-
-import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
-import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
-import main.java.com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction;
-import main.java.com.qualitestgroup.dataextract.pdf.PDFOpener;
-import main.java.com.qualitestgroup.dataextract.pdf.extraction.PDFText2XML;
-import main.java.com.qualitestgroup.dataextract.utilities.ComparisonMode;
-import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
-
-
 
 public class UnitTests {
 
 	private static final Log LOG = LogFactory.getLog(UnitTests.class);
 	private final static Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
-
 	private PDFOpener opener;
 	private PDFText2XML text2XML;
 	public PDF2XMLComparator xmlComparator = new PDF2XMLComparator();
@@ -49,10 +44,10 @@ public class UnitTests {
 	static String leftStripped = null;
 	static String rightStripped = null;
 	static SoftAssert softAssertion = new SoftAssert();
-
 	public static String firstXmlDoc = getConfigProperty("firstXmlDocFile");
 	public static String secondXmlDoc = getConfigProperty("secondXmlDocFile");
 	private static DecimalFormat df2 = new DecimalFormat("#.##");
+	private final Asserter asserter = new Asserter();
 
 	@BeforeTest
 	public void setup() throws IOException {
@@ -132,7 +127,7 @@ public class UnitTests {
 		//Reporter.log("Verify number of pages, Pages in Base file : "+left.getNumberOfPages()+", Pages in reference file : "+right.getNumberOfPages(), true);
 		Reporter.log("Verified number of pages, Pages in Base file : "+left.getNumberOfPages()+", Pages in reference file : "+right.getNumberOfPages(), true);
 		
-		//Asserter.validateTrue(left.getNumberOfPages() == right.getNumberOfPages(), "Pages count mismatches, First file "
+		//asserter.validateTrue(left.getNumberOfPages() == right.getNumberOfPages(), "Pages count mismatches, First file "
 			//	+ " pages are " + left.getNumberOfPages() + " and second files pages are " + right.getNumberOfPages());
 		
 		//Reporter.log("Verified!! Number of pages are same", true);
@@ -142,7 +137,7 @@ public class UnitTests {
 		util.setCompareMode(ComparisonMode.TEXT_MODE);
 
 		boolean result = util.compare(file1, file2);
-		Asserter.validateTrue(result);
+		asserter.validateTrue(result);
 
 		Reporter.log("Compared PDF text content ", true);
 
@@ -194,7 +189,7 @@ public class UnitTests {
 					filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
 							+ file2updatedName[0] + i + ".png";
 					ImageIO.write(joinedImg, "png", new File(filePath));
-					Asserter.validateTrue(diffinPerecentage == 0.0,
+					asserter.validateTrue(diffinPerecentage == 0.0,
 							"PDF data differs with " + df2.format(diffinPerecentage) + "%" + " & for reference "
 									+ "<a href=" + filePath + ">link</a>");
 					
@@ -210,7 +205,7 @@ public class UnitTests {
 					String filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
 							+ file2updatedName[0] + i + ".png";
 					ImageIO.write(joinedImg, "png", new File(filePath));
-					Asserter.validateTrue(diffinPerecentage == 0.0,
+					asserter.validateTrue(diffinPerecentage == 0.0,
 							"PDF Image differs with " + df2.format(diffinPerecentage) + "%" + " & for reference "
 									+ "<a href=" + filePath + ">link</a>");
 					break;
@@ -221,7 +216,7 @@ public class UnitTests {
 		}
 		
 		Reporter.log("Compared extracted image with reference image successfully ", true);
-		//Asserter.validateAssert.assertAll();
+		//asserter.validateAssert.assertAll();
 	
 	}
 	
@@ -269,7 +264,7 @@ public class UnitTests {
 				}
 			}
 		}
-		Asserter.validateAssert.assertAll();
+		asserter.validateAssert.assertAll();
 	}}
 
 	private String getconfigproperty(String string) {

@@ -1,6 +1,8 @@
 package test.java.test.qualidexJarTest;
 
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
+import main.java.com.qualitestgroup.dataextract.utilities.TestContext;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -15,13 +17,12 @@ public class PDFTest{
 	public List<String> deletedStrings = Arrays.asList("");
 	public List<String> newStrings = Arrays.asList("[1]");
 	public Map<String, String> diff =new HashMap<>();
-	public QualidexLibrary qualidexLibrary = new QualidexLibrary();
-	
+	private final QualidexLibrary qualidexLibrary = new QualidexLibrary();
+
 	@Test
 	public void test() {
 //		diff.put("Herr","Frau");
 		diff.put("","[1]");
 		qualidexLibrary.qualiDexCompares(basePDF, refPDF, diff, deletedStrings, newStrings);
 	}
-
 }

@@ -5,7 +5,6 @@
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-
 	<distributionManagement>
 		<snapshotRepository>
 			<id>Qualidex-Snapshot</id>
@@ -18,7 +17,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<timestamp>${build.time}</timestamp>
+		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>dd-MM-yyyy_HH-mm</maven.build.timestamp.format>
 		<sureFireDir>${project.basedir}/target/${timestamp}</sureFireDir>
 	</properties>
@@ -27,7 +26,6 @@
 		<!-- Source directory configuration -->
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
-
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -41,8 +39,6 @@
 					</descriptorRefs>
 				</configuration>
 			</plugin>
-
-
 			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.8.1</version>
@@ -56,7 +52,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -65,7 +60,6 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -96,7 +90,7 @@
 							<goal>timestamp-property</goal>
 						</goals>
 						<configuration>
-							<name>build.time</name>
+							<name>timestamp</name>
 							<pattern>dd-MM-yyyy_HH-mm</pattern>
 							<timeZone>Asia/Calcutta</timeZone>
 						</configuration>
@@ -138,33 +132,24 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
-
 				</configuration>
 			</plugin>
 			<!-- Compiler plugin configures the java version to be usedfor compiling 
 				the code -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
 					<fork>true</fork>
-					<executable>C:\Users\stewart.jumbe\.jdks\corretto-1.8.0_352-1\bin\javac.exe</executable>
+					<executable>C:\Program Files\Java\jdk1.8.0_291\bin\javac.exe</executable>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.6</version>
 			</plugin>
-
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -205,7 +190,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>AdobeNexus</id>
@@ -214,7 +198,6 @@
 	</repositories>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -346,7 +329,6 @@
 			<artifactId>jcommander</artifactId>
 			<version>1.78</version>
 		</dependency>
-
 
 		<!-- https://mvnrepository.com/artifact/xmlunit/xmlunit -->
 		<dependency>

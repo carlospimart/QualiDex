@@ -1,18 +1,16 @@
 package test.java.com.qualitestgroup.qualidexexcelutility;
 
-import java.util.List;
-
+import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
+import main.java.com.qualitestgroup.dataextract.utilities.TestContext;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
-
+import java.util.List;
 
 public class Unit_Test {
-
-	private QualidexLibrary qualidexLibrary = new QualidexLibrary();
+	
 	private  String Pdf = "src\\test\\resources\\englishgrammarbook.pdf";
 	private String ExcelPath = "src\\test\\resources\\TestExcel.xlsx";
 	private String PDF2 = "src\\test\\resources\\German.pdf";
@@ -27,9 +25,9 @@ public class Unit_Test {
 	private  String filterCellValue = "Test2";
 	private  int filterColumnNumber = 0;
 	private  int filterCellNumber = 1;
-	private Asserter asserter = new Asserter();
-
-
+	private final QualidexLibrary qualidexLibrary = new QualidexLibrary();
+	private final Asserter asserter = new Asserter();
+	
 	@BeforeClass
 	public void initialConfig() {
 		// logger.info("Check is PDF consits of text")
@@ -58,7 +56,7 @@ public class Unit_Test {
 
 		try {
 			Reporter.log("Set Excel location");
-//			qualidexLibrary.setExcelLocation(ExcelPath);
+//			hooks.qualidexLibrary.setExcelLocation(ExcelPath);
 			Reporter.log("Excel location has been set and start finding excel data in PDF");
 
 			// List<>
@@ -85,7 +83,7 @@ public class Unit_Test {
 	public void qualidexLibraryTest2() {
 		try {
 			Reporter.log("Set Excel location");
-//			qualidexLibrary.setExcelLocation(ExcelPath);
+//			hooks.qualidexLibrary.setExcelLocation(ExcelPath);
 			Reporter.log("Excel location has been set and start finding excel data in PDF");
 
 			List<String> validationValuess = qualidexLibrary.applyFilterAndStoreCellValues(ExcelPath, sheet, filterCellValue , filterColumnNumber, filterCellNumber);
@@ -113,17 +111,17 @@ public class Unit_Test {
 
 
 	/*
-	 * @Test public static void qualidexLibraryTest2() { try {
+	 * @Test public static void hooks.qualidexLibraryTest2() { try {
 	 * Reporter.log("Set Header coordinates"); //
-	 * qualidexLibrary.setHeaderCoords("117,");
-	 * qualidexLibrary.setHeaderCoords("847.453,");
+	 * hooks.qualidexLibrary.setHeaderCoords("117,");
+	 * hooks.qualidexLibrary.setHeaderCoords("847.453,");
 	 * Reporter.log("Header coordinates set successfully");
-	 * Reporter.log("Check is header empty?"); if (qualidexLibrary.isEmptyHeader())
+	 * Reporter.log("Check is header empty?"); if (hooks.qualidexLibrary.isEmptyHeader())
 	 * { Reporter.log("Header is not empty"); } else {
 	 * Reporter.log("Header is empty"); }
 	 * Reporter.log("validate content in Header"); //
-	 * if(qualidexLibrary.existsInHeader("Head")) if
-	 * (qualidexLibrary.existsInHeader("Versicherung 56-5013692")) { //
+	 * if(hooks.qualidexLibrary.existsInHeader("Head")) if
+	 * (hooks.qualidexLibrary.existsInHeader("Versicherung 56-5013692")) { //
 	 * Reporter.log("Head exists in Header");
 	 * Reporter.log("Versicherung 56-5013692 exists in Header"); } else { //
 	 * Reporter.log("Head doesnot exists in Header");
@@ -132,22 +130,22 @@ public class Unit_Test {
 
 			/*
 			 * Reporter.log("Set footer coordinates");
-			 * qualidexLibrary.setFooterCoords("90, 108.45,");
+			 * hooks.qualidexLibrary.setFooterCoords("90, 108.45,");
 			 * Reporter.log("footer coordinates set successfully");
 			 *
-			 * Reporter.log("Check is footer empty?"); if(qualidexLibrary.isEmptyFooter()) {
+			 * Reporter.log("Check is footer empty?"); if(hooks.qualidexLibrary.isEmptyFooter()) {
 			 * Reporter.log("Footer is not empty"); } else {
 			 * Reporter.log("Footer is empty"); }
 			 *
 			 * Reporter.log("validate content in footer");
-			 * if(qualidexLibrary.existsInFooter("Foot")) {
+			 * if(hooks.qualidexLibrary.existsInFooter("Foot")) {
 			 * Reporter.log("Foot exists in footer"); } else {
 			 * Reporter.log("Footer doesnot is exists in footer"); }
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Asserter.validateAssert.assertAll();
+		hooks.asserter.validateAssert.assertAll();
 
 	}*/
 
@@ -193,7 +191,7 @@ public class Unit_Test {
 
 	@Test
 	public void qualidexImageTest() {
-		// qualidexLibrary.findText("Header");
+		// hooks.qualidexLibrary.findText("Header");
 		Reporter.log("Finding image in PDF");
 
 		if (qualidexLibrary.findImage(PDF, refImage) == true) {
