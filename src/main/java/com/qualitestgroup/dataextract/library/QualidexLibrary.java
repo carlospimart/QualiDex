@@ -1,10 +1,10 @@
 package main.java.com.qualitestgroup.dataextract.library;
 
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
-import main.java.com.qualitestgroup.data_extract_demo.damoregroup.PDF2XMLComparator;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 import name.fraser.neil.plaintext.diff_match_patch.Operation;
+import org.apache.logging.log4j.core.time.Instant;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -12,7 +12,6 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,6 +29,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.*;
 import java.util.logging.Logger;
@@ -45,6 +46,20 @@ public class QualidexLibrary {
     private static final Logger logger = Logger.getLogger(QualidexLibrary.class.getName());
     private final QualidexBuilder qualidexBuilder = QualidexBuilder.builder().build();
     private final Asserter asserter = new Asserter();
+
+    /**
+     * This method helps to find the table in PDF
+     *
+     * @param PDFPath  - Path of PDF
+     * @param refTable - Path of reference table
+     * @return
+     */
+    @SuppressWarnings("unused")
+    private static boolean findTable(String PDFPath, String refTable) {
+        // This method is not implimented
+        return false;
+
+    }
 
     /**
      * This method fetch the validation content from DB
@@ -68,20 +83,6 @@ public class QualidexLibrary {
             logger.info(ex.getMessage());
             ex.printStackTrace();
         }
-    }
-
-    /**
-     * This method helps to find the table in PDF
-     *
-     * @param PDFPath  - Path of PDF
-     * @param refTable - Path of reference table
-     * @return
-     */
-    @SuppressWarnings("unused")
-    private static boolean findTable(String PDFPath, String refTable) {
-        // This method is not implimented
-        return false;
-
     }
 
     /**
@@ -481,6 +482,7 @@ public class QualidexLibrary {
     /**
      * This method extract PDF data into text file
      */
+    //****Do we need this?
     private String pdfExtracter() {
         String PdfToText = null;
         try {
@@ -499,7 +501,7 @@ public class QualidexLibrary {
      *
      * @param pdtxtOutput - Pdf to text .txt file
      */
-
+//****Do we need this?
     private String TextUTF16LEToTextUTF8(String pdtxtOutput) throws FileNotFoundException {
         String cellValues = null;
         FileInputStream fis = new FileInputStream(pdtxtOutput);
@@ -617,12 +619,19 @@ public class QualidexLibrary {
             for (COSName c : pdResources.getXObjectNames()) {
                 PDXObject o = pdResources.getXObject(c);
                 if (o instanceof org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) {
-                    File file = new File(".\\Images\\page_" + page + "_image_" + i + ".png");
+                    File file = new File(".\\Images\\page_" + page + "_image_" + i +"_"+ getSystemTime("yyyy-dd-M HH-mm-ssSS")+ ".png");
                     i++;
                     ImageIO.write(((org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) o).getImage(), "png", file);
                 }
             }
         }
+    }
+
+    /**
+     * Current time in HHmmssSSS
+     */
+    private String getSystemTime(String pattern) {
+        return (new SimpleDateFormat(pattern).format(new Date()));
     }
 
     /**
@@ -997,7 +1006,7 @@ public class QualidexLibrary {
      * @param refPDF  ref. PDF file path
      * @return returns PDF comparison
      */
-
+//******Do we need this??
     public String qualiDexCompares(String basePDF, String refPDF) {
         List<String> deletedStrings = Arrays.asList("");
         List<String> newlyAdded = Arrays.asList("");
@@ -1057,7 +1066,7 @@ public class QualidexLibrary {
     /**
      * This method extracts PDF content
      *
-     * @param PDF Pdf file
+     * @param pdf Pdf file
      * @return extracted Pdf Texts
      * @throws IOException
      */
