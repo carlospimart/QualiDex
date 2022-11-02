@@ -12,9 +12,9 @@
 			<class name="test.java.com.qualitestgroup.qualidexexcelutility.Unit_Test">
 				<methods>
 							<include name = "qualidexImageTest"/>
-							<include name="qualidexLibraryTest3"/>
-							<include name="qualidexLibraryTest1"/>
-							<include name = "qualidexLibraryTest2"/>
+<!--							<include name="qualidexLibraryTest3"/>-->
+<!--							<include name="qualidexLibraryTest1"/>-->
+<!--							<include name = "qualidexLibraryTest2"/>-->
 				</methods>
 			</class>
 		</classes>
