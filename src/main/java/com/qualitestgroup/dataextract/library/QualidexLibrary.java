@@ -4,12 +4,12 @@ import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 import name.fraser.neil.plaintext.diff_match_patch.Operation;
-import org.apache.logging.log4j.core.time.Instant;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 /**
  * Qualidex library
  *
- * @author pavan.kumar
+ * @author pavan.kumar, Ramkumar Raja, Stewart Jumbe
  */
 public class QualidexLibrary {
     private static final Logger logger = Logger.getLogger(QualidexLibrary.class.getName());
@@ -50,12 +50,11 @@ public class QualidexLibrary {
     /**
      * This method helps to find the table in PDF
      *
-     * @param PDFPath  - Path of PDF
+     * @param pdfPath  - Path of PDF
      * @param refTable - Path of reference table
      * @return
      */
-    @SuppressWarnings("unused")
-    private static boolean findTable(String PDFPath, String refTable) {
+    private static boolean findTable(String pdfPath, String refTable) {
         // This method is not implimented
         return false;
 
@@ -70,8 +69,6 @@ public class QualidexLibrary {
      * @param tableName  - Table name
      * @param CoulmnName - Column name
      */
-
-    @SuppressWarnings("unused")
     private void readFromDB(String url, String userName, String password, String tableName, String CoulmnName) {
         try (Connection conn = DriverManager.getConnection(url, userName, password)) {
             Statement stmt = conn.createStatement();
@@ -99,14 +96,12 @@ public class QualidexLibrary {
         }
     }
 
-
     /**
      * This method sets Header coordinates
      *
      * @param coords - Header coordinates
      * @return - Boolean True or False
      */
-    @SuppressWarnings("unused")
     public boolean setHeaderCoords(String coords) {
         try {
             qualidexBuilder.setHeaderCoords(coords);
@@ -114,7 +109,6 @@ public class QualidexLibrary {
             e.printStackTrace();
         }
         return false;
-
     }
 
     /**
@@ -123,7 +117,6 @@ public class QualidexLibrary {
      * @param coords - Footer coordinates
      * @return - Boolean True or False
      */
-    @SuppressWarnings("unused")
     public boolean setFooterCoords(String coords) {
         try {
             qualidexBuilder.setFooterCoords(coords);
@@ -141,7 +134,6 @@ public class QualidexLibrary {
      * @param fontSize  - font size
      * @return - Boolean True or False
      */
-    @SuppressWarnings("unused")
     private boolean setSection(String section, String fontStyle, int fontSize) {
         return false;
     }
@@ -154,7 +146,6 @@ public class QualidexLibrary {
      * @param cellNumber     - cell number
      * @return cellValue
      */
-    @SuppressWarnings("unused")
     private String readCellValue(String excelSheetPath, String sheet, int cellNumber) {
         String cellValue = null;
         try {
@@ -178,26 +169,23 @@ public class QualidexLibrary {
      *
      * @param excelSheetPath - Path of Excel
      * @param sheetName      - Excel Sheet
-     * @param columnWanted   -Column in excel sheet to analyse
+     * @param columnTitle    -Column in excel sheet to analyse
      * @return string validationCellValues
      */
-    public List<String> readCellValues(String excelSheetPath, String sheetName, String columnWanted) throws FileNotFoundException {
+    public List<String> readCellValues(String excelSheetPath, String sheetName, String columnTitle) throws FileNotFoundException {
         List<String> validationCellValues = new ArrayList<>();
-
         try (FileInputStream fis = new FileInputStream(new File(excelSheetPath))) {
             //creating Workbook instance that refers to .xlsx file
             XSSFWorkbook wb = new XSSFWorkbook(fis);
-            XSSFSheet sheet1 = wb.getSheetAt(0);//creating a Sheet object to retrieve object
-            int noOfRows = wb.getSheet(sheet1.getSheetName()).getPhysicalNumberOfRows();
-
             Integer columnIndex = null;
             List<Cell> listWithCellsData = new ArrayList<Cell>(); //To hold data(non-null cells) from the column of interest
+            XSSFSheet sheet1 = wb.getSheetAt(0);//creating a Sheet object to retrieve object
+            int noOfRows = wb.getSheet(sheet1.getSheetName()).getPhysicalNumberOfRows();
             Row row1 = sheet1.getRow(0);//Getting the first Cell
-
             //iterating throw rows to get the columnIndex of the column of interest
             for (Cell cell : row1) {
                 System.out.println("Cell name: " + cell.toString());
-                if (cell.getStringCellValue().equals(columnWanted)) {
+                if (cell.getStringCellValue().equals(columnTitle)) {
                     columnIndex = cell.getColumnIndex();
                 }
             }
@@ -211,7 +199,7 @@ public class QualidexLibrary {
                     }
                 }
             } else {
-                Reporter.log("could not find column " + columnWanted + " in: " + excelSheetPath);
+                Reporter.log("could not find column " + columnTitle + " in: " + excelSheetPath);
             }
         } catch (EncryptedDocumentException | IOException e) {
             e.printStackTrace();
@@ -261,7 +249,6 @@ public class QualidexLibrary {
      * @param value - String value which is being verifie
      * @return - Boolean True or False
      */
-    @SuppressWarnings("unused")
     public boolean existsInHeader(String value) {
         boolean found = false;
         try (BufferedReader br = new BufferedReader(new FileReader(qualidexBuilder.getPdfToText()))) {
@@ -293,11 +280,9 @@ public class QualidexLibrary {
                 asserter.validateTrue((st = br.readLine()) != null, "Header not found");
                 found = false;
             }
-            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return found;
     }
 
@@ -307,8 +292,6 @@ public class QualidexLibrary {
      * @param referenceString - Text Value which being compared against PDF
      * @return boolean result
      */
-
-
     public boolean findValuesInPdf(String referenceString) {
         boolean result = false;
         try {
@@ -332,7 +315,6 @@ public class QualidexLibrary {
                 }
                 br.close();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -345,7 +327,6 @@ public class QualidexLibrary {
      * @param value - String value which is being verified
      * @return - Boolean True or False
      */
-    @SuppressWarnings("unused")
     public boolean existsInFooter(String value) {
         boolean found = false;
         try (BufferedReader br = new BufferedReader(new FileReader(qualidexBuilder.getPdfToText()))) {
@@ -387,7 +368,6 @@ public class QualidexLibrary {
      *
      * @return - Boolean True or False
      */
-    @SuppressWarnings("unused")
     public boolean isEmptyHeader() {
         boolean found = false;
         try (BufferedReader br = new BufferedReader(new FileReader(qualidexBuilder.getPdfToText()))) {
@@ -426,8 +406,6 @@ public class QualidexLibrary {
      *
      * @return - Boolean True or False
      */
-
-    @SuppressWarnings("unused")
     public boolean isEmptyFooter() {
         boolean found = false;
         try (BufferedReader br = new BufferedReader(new FileReader(qualidexBuilder.getPdfToText()))) {
@@ -464,13 +442,13 @@ public class QualidexLibrary {
     /**
      * This method returns the number of pages in pdf
      *
-     * @param pdf - Path of Pdf
+     * @param pdfPath - Path of Pdf
      * @return count - number of pages in pdf
      */
-    public int returnNumberOfPages(String pdf) {
+    public int returnNumberOfPages(String pdfPath) {
         PDDocument doc = null;
         try {
-            doc = PDDocument.load(new File(pdf));
+            doc = PDDocument.load(new File(pdfPath));
             logger.info("Number of pages in Pdf :- " + doc.getNumberOfPages());
         } catch (IOException e) {
             e.printStackTrace();
@@ -482,7 +460,6 @@ public class QualidexLibrary {
     /**
      * This method extract PDF data into text file
      */
-    //****Do we need this?
     private String pdfExtracter() {
         String PdfToText = null;
         try {
@@ -501,7 +478,6 @@ public class QualidexLibrary {
      *
      * @param pdtxtOutput - Pdf to text .txt file
      */
-//****Do we need this?
     private String TextUTF16LEToTextUTF8(String pdtxtOutput) throws FileNotFoundException {
         String cellValues = null;
         FileInputStream fis = new FileInputStream(pdtxtOutput);
@@ -552,65 +528,90 @@ public class QualidexLibrary {
     /**
      * This method verifies whether text is present in PDF
      *
-     * @param pdfpath - Path of Pdf
+     * @param pdfPath - Path of Pdf
      * @return - Boolean True or False
      */
 
-    public boolean isPdfEmpty(String pdfpath) {
+    public boolean isPdfEmpty(String pdfPath) {
         boolean found = false;
         try {
-            found = pdfExtractor(pdfpath) != null;
+            found = pdfExtractor(pdfPath) != null;
             asserter.validateTrue(found, "PDF is empty");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return found;
-
     }
 
     /**
-     * This methods helps to find the image in the PDF
+     * This method gets expected images from a specific folder and compares them to images
+     * extracted from a pdf
      *
-     * @param pdfPath      - Path of PDF
-     * @param refImagePath - Path of reference image
+     * @param pdfImageDirectoryPath      - Directory of the pdf with images to be extracted and compared against
+     *                                   expected images
+     * @param expectedImageDirectoryPath - Directory of the expected images
      * @return - boolean result
      */
-    public boolean findImage(String pdfPath, String refImagePath) {
+    public boolean findImage(String pdfImageDirectoryPath, String expectedImageDirectoryPath) {
         boolean result = false;
-        boolean results = false;
+        Map<File, Boolean> imageResult = new HashMap<>();
+        String imageExportDir = ".\\Images\\" + getSystemTime("yyyy-dd-M HH-mm-ssSS") + "\\";
         try {
             // Extract images from the PDF
-            imageExtraction(pdfPath);
-            File dir = new File(".\\Images\\");
-            File[] directoryListing = dir.listFiles();
-            ArrayList<Boolean> list = new ArrayList<Boolean>();
-            String imageList = null;
-            if (directoryListing != null) {
-                for (File images : directoryListing) {
-                    result = processImage(images, refImagePath);
-                    list.add(result);
-                    imageList = list.toString();
+            imageExtraction(pdfImageDirectoryPath, imageExportDir);
+            File pdfImageDir = new File(imageExportDir);
+            File expectedImageDir = new File(expectedImageDirectoryPath);
+            File[] pdfDirectoryListing = pdfImageDir.listFiles();
+            File[] expectedImageDirectoryListing = expectedImageDir.listFiles();
+            //verifying that both directories have images present
+            if (Objects.requireNonNull(pdfDirectoryListing).length != 0 && Objects.requireNonNull(expectedImageDirectoryListing).length != 0) {
+                for (File expectedImage : expectedImageDirectoryListing) {
+                    for (File images : pdfDirectoryListing) {
+                        result = processImage(images, String.valueOf(expectedImage));
+                        if (result) {
+                            imageResult.put(expectedImage, true);
+                        }
+                    }
                 }
-                results = searchImage(imageList, "true");
+            } else {
+                logger.warning("Either PDFImageDirectory or ExpectedImageDirectory is empty");
+            }
+            assert expectedImageDirectoryListing != null;
+            if (imageResult.size() != expectedImageDirectoryListing.length) {
+                for (File expectedImage : expectedImageDirectoryListing) {
+                    if (!imageResult.containsKey(expectedImage)) {
+                        imageResult.put(expectedImage, false);
+                    }
+                }
+                for (Map.Entry<File,Boolean> image : imageResult.entrySet()) {
+                    if (Boolean.TRUE.equals(image.getValue())) {
+                        logger.info("Image with name " + getNameFromPath(image.getKey().toString()) + " found in PDFImageDirectory: " + pdfImageDirectoryPath);
+                        result = true;
+                    } else {
+                        logger.info("Image with name " + getNameFromPath(image.getKey().toString()) + " not found in PDFImageDirectory: " + pdfImageDirectoryPath);
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return results;
+        return result;
     }
 
     /**
      * This method extracts the images from PDF
      *
-     * @param PDF - PDF path
+     * @param pdf            - PDF path
+     * @param imageExportDir - The directory that images are exported to during comparison process
      * @throws IOException
      */
-    private void imageExtraction(String PDF) throws IOException {
-        File theDir = new File(".\\Images\\");
+    private void imageExtraction(String pdf, String imageExportDir) throws IOException {
+
+        File theDir = new File(imageExportDir);
         if (!theDir.exists()) {
             theDir.mkdirs();
         }
-        PDDocument document = PDDocument.load(new File(PDF));
+        PDDocument document = PDDocument.load(new File(pdf));
         int NoOfPage = document.getNumberOfPages();
         for (int page = 0; page < NoOfPage; page++) {
             PDPage pdfpage = document.getPage(page);
@@ -618,10 +619,10 @@ public class QualidexLibrary {
             PDResources pdResources = pdfpage.getResources();
             for (COSName c : pdResources.getXObjectNames()) {
                 PDXObject o = pdResources.getXObject(c);
-                if (o instanceof org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) {
-                    File file = new File(".\\Images\\page_" + page + "_image_" + i +"_"+ getSystemTime("yyyy-dd-M HH-mm-ssSS")+ ".png");
+                if (o instanceof PDImageXObject) {
+                    File file = new File(imageExportDir + "page_" + page + "_image_" + i + "_" + getSystemTime("yyyy-dd-M HH-mm-ssSS") + ".png");
                     i++;
-                    ImageIO.write(((org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) o).getImage(), "png", file);
+                    ImageIO.write(((PDImageXObject) o).getImage(), "png", file);
                 }
             }
         }
@@ -634,31 +635,31 @@ public class QualidexLibrary {
         return (new SimpleDateFormat(pattern).format(new Date()));
     }
 
-    /**
-     * This method finds the reference image with the PDF
-     *
-     * @param imageList - List image extracted from PDF
-     * @param value     - value "true"
-     * @return - Boolean true or false
-     */
-    private boolean searchImage(String imageList, String value) {
-        boolean result = false;
-        try {
-            String st = imageList;
-            boolean results = st.contains(value);
-            if (results == false) {
-                result = false;
-                logger.info("Image not found in PDF");
-            } else {
-                result = true;
-                logger.info("Image found in PDF");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-
-    }
+//    /**
+//     * This method finds the reference image with the PDF
+//     *
+//     * @param imageList - List image extracted from PDF
+//     * @param value     - value "true"
+//     * @return - Boolean true or false
+//     */
+//    private boolean searchImage(String imageList, String value) {
+//        boolean result = false;
+//        try {
+//            String st = imageList;
+//            boolean results = st.contains(value);
+//            if (results == false) {
+//                result = false;
+//                logger.info("Image not found in PDF");
+//            } else {
+//                result = true;
+//                logger.info("Image found in PDF");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//
+//    }
 
     /**
      * This method process the refImage with Images in PDF
@@ -1006,7 +1007,7 @@ public class QualidexLibrary {
      * @param refPDF  ref. PDF file path
      * @return returns PDF comparison
      */
-//******Do we need this??
+
     public String qualiDexCompares(String basePDF, String refPDF) {
         List<String> deletedStrings = Arrays.asList("");
         List<String> newlyAdded = Arrays.asList("");
@@ -1077,5 +1078,16 @@ public class QualidexLibrary {
         PDFTextStripper pdfstripper = new PDFTextStripper();
         String text = pdfstripper.getText(document);
         return text;
+    }
+
+    /**
+     * This method extracts the name of an object given its path
+     *
+     * @param objectPath path to the image
+     * @return image name extracted from imagePath
+     */
+    private String getNameFromPath(String objectPath) {
+        List<String> splitString = Arrays.asList(objectPath.split("\\\\"));
+        return splitString.get(splitString.size() - 1);
     }
 }

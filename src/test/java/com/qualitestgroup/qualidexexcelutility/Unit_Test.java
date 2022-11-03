@@ -6,6 +6,7 @@ import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,6 +16,9 @@ public class Unit_Test {
     private final String pdfPath = "src\\test\\resources\\German.pdf";
     private final String pathOfPDFWithImages = "src\\test\\resources\\FoodhabitsofUttarakhandv1.pdf";
     private final String refImagePath = "src\\test\\resources\\image03.png";
+    private final String refImagePath1 = "src\\test\\resources\\image01Fail.png";
+    private final String refImagePath2 = "src\\test\\resources\\image02.png";
+    private final String refImageDir =".\\refImages\\";
     private final String value = "Versicherung";
     private final String formatText = "Angebot";
     private final String formatTextFontstyle = "LiberationSansNarrow-Bold";
@@ -163,8 +167,8 @@ public class Unit_Test {
     public void qualidexImageTest() {
         // qualidexLibrary.findText("Header");
         Reporter.log("Finding image in PDF");
-        asserter.validateTrue(qualidexLibrary.findImage(pathOfPDFWithImages, refImagePath), "Image not found in the PDF");
-        asserter.assertAll();
+        asserter.validateTrue(qualidexLibrary.findImage(pathOfPDFWithImages, refImageDir), "Image not found in the PDF");
+      asserter.assertAll();
     }
 
 }
