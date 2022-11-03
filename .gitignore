@@ -1,0 +1,7 @@
+# Default ignored files
+/shelf/
+*.iml
+.idea/workspace.xml
+.idea/libraries
+.idea/modules.xml
+.idea/sonarlint
