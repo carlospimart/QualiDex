@@ -1,5 +1,6 @@
 package main.java.com.qualitestgroup.dataextract.library;
 
+import com.github.javafaker.Bool;
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
@@ -10,6 +11,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,6 +38,7 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Qualidex library
@@ -264,40 +267,26 @@ public class QualidexLibrary {
     @SuppressWarnings("unused")
     public boolean existsInHeader(String value) {
         boolean found = false;
+        String pdfText;
         try (BufferedReader br = new BufferedReader(new FileReader(qualidexBuilder.getPdfToText()))) {
-            String st;
-            // Condition holds true till
-            // there is character in a string
-            while ((st = br.readLine()) != null) {
+            while ((pdfText = br.readLine()) != null) {
                 String regexPattern = (qualidexBuilder.getHeaderCoords());
                 Pattern pattern = Pattern.compile(regexPattern);
-                Matcher matcher = pattern.matcher(st);
-                String result = value;
+                Matcher matcher = pattern.matcher(pdfText);
                 if (matcher.find()) {
-                    if (found = true) {
-                        logger.info("Header is present");
-                        if (st.contains(result)) {
-                            logger.info("value " + result + " is present in Header " + st);
-                            found = true;
-                        } else {
-                            logger.info("Value " + result + " is not Present in Header " + st);
-                            asserter.validateTrue(st.contains(result), "Value " + result + " is not Present in Header " + st);
-                            found = false;
-                        }
+                    logger.info("Header is present");
+                    if (pdfText.contains(value)) {
+                        logger.info("value " + value + " is present in Header " + pdfText);
+                        found = true;
+                    } else {
+                        logger.info("Value " + value + " is not Present in Header " + pdfText);
                     }
-                    break;
                 }
+                break;
             }
-            if ((st = br.readLine()) == null) {
-                logger.info("Header not found");
-                asserter.validateTrue((st = br.readLine()) != null, "Header not found");
-                found = false;
-            }
-            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return found;
     }
 
@@ -577,26 +566,48 @@ public class QualidexLibrary {
      */
     public boolean findImage(String pdfPath, String refImagePath) {
         boolean result = false;
-        boolean results = false;
+//        boolean results = false;
+        Map<File, Boolean> imageResult = new HashMap<>();
+
         try {
             // Extract images from the PDF
             imageExtraction(pdfPath);
-            File dir = new File(".\\Images\\");
-            File[] directoryListing = dir.listFiles();
-            ArrayList<Boolean> list = new ArrayList<Boolean>();
-            String imageList = null;
-            if (directoryListing != null) {
-                for (File images : directoryListing) {
-                    result = processImage(images, refImagePath);
-                    list.add(result);
-                    imageList = list.toString();
+            File pdfImageDir = new File(".\\Images\\");
+            File expectedImageDir = new File(refImagePath);
+            File[] pdfDirectoryListing = pdfImageDir.listFiles();
+            File[] expectedImageDirectoryListing = expectedImageDir.listFiles();
+            if (Objects.requireNonNull(pdfDirectoryListing).length != 0 && Objects.requireNonNull(expectedImageDirectoryListing).length != 0) {
+                for (File expectedImage : expectedImageDirectoryListing) {
+                    for (File images : pdfDirectoryListing) {
+                        result = processImage(images, expectedImage);
+                        if (result) {
+                            imageResult.put(expectedImage, result);
+                        }
+                    }
                 }
-                results = searchImage(imageList, "true");
+            } else {
+                logger.severe("Either PDFImageDirectory or ExpectedImageDirectory is empty");
+            }
+
+            if (imageResult.size() != expectedImageDirectoryListing.length) {
+                for (File expectedImage : expectedImageDirectoryListing) {
+                    if (!imageResult.containsKey(expectedImage)) {
+                        imageResult.put(expectedImage, false);
+                    }
+                }
+                for (Map.Entry image : imageResult.entrySet()) {
+                    if (Boolean.TRUE.equals(image.getValue())) {
+                        logger.info("Image with name " + image.getKey() + " found in PDFImageDirectory");
+                        result = true;
+                    } else {
+                        logger.info("Image with name " + image.getKey() + " not found in PDFImageDirectory");
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return results;
+        return result;
     }
 
     /**
@@ -618,10 +629,10 @@ public class QualidexLibrary {
             PDResources pdResources = pdfpage.getResources();
             for (COSName c : pdResources.getXObjectNames()) {
                 PDXObject o = pdResources.getXObject(c);
-                if (o instanceof org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) {
-                    File file = new File(".\\Images\\page_" + page + "_image_" + i +"_"+ getSystemTime("yyyy-dd-M HH-mm-ssSS")+ ".png");
+                if (o instanceof PDImageXObject) {
+                    File file = new File(".\\Images\\page_" + page + "_image_" + i + "_" + getSystemTime("yyyy-dd-M HH-mm-ssSS") + ".png");
                     i++;
-                    ImageIO.write(((org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) o).getImage(), "png", file);
+                    ImageIO.write(((PDImageXObject) o).getImage(), "png", file);
                 }
             }
         }
@@ -668,9 +679,9 @@ public class QualidexLibrary {
      * @return Boolean true or false
      * @throws IOException
      */
-    private boolean processImage(File imageFiles, String refImage) throws IOException {
+    private boolean processImage(File imageFiles, File refImage) throws IOException {
         boolean result = false;
-        String file1 = refImage;
+        String file1 = refImage.toString();
         String file2 = imageFiles.toString();
         Image image1 = Toolkit.getDefaultToolkit().getImage(file1);
         Image image2 = Toolkit.getDefaultToolkit().getImage(file2);
@@ -803,28 +814,32 @@ public class QualidexLibrary {
     }
 
     private void earlyDiffStateForDelete(final List<String> toBeRemoved, final LinkedList<diff_match_patch.Diff> diffFinalReport) {
-        // in this case it means string is deleted
         int loopCount = 0;
-        for (String removeString : toBeRemoved) {
-            if (qualidexBuilder.getTextInEarlierDiff().contains(removeString)) {
-                if (loopCount > 0) {
-                    qualidexBuilder.getRegexForSplit().append("|").append("(");
-                }
-                qualidexBuilder.getRegexForSplit().append("(?<=").append(removeString).append(")|(?=").append(removeString).append(")").append(")");
-                loopCount++;
-            }
-        }
-        if (loopCount > 0) {
-            String[] earlyDiffTexts = qualidexBuilder.getTextInEarlierDiff().split(qualidexBuilder.getRegexForSplit().toString());
-            for (String earlyDiffText : earlyDiffTexts) {
-                if (toBeRemoved.contains(earlyDiffText)) {
-                    diffFinalReport.add(new Diff(Operation.EQUAL, earlyDiffText));
-                } else {
-                    diffFinalReport.add(new Diff(Operation.DELETE, earlyDiffText));
+        try {
+            for (String removeString : toBeRemoved) {
+                if (qualidexBuilder.getTextInEarlierDiff().contains(removeString)) {
+                    if (loopCount > 0) {
+                        qualidexBuilder.getRegexForSplit().append("|").append("(");
+                    }
+                    qualidexBuilder.getRegexForSplit().append("(?<=").append(removeString).append(")|(?=").append(removeString).append(")").append(")");
+                    loopCount++;
                 }
             }
-        } else {
-            diffFinalReport.add(new Diff(Operation.DELETE, qualidexBuilder.getTextInEarlierDiff()));
+            if (loopCount > 0) {
+                String[] earlyDiffTexts = qualidexBuilder.getTextInEarlierDiff().split(qualidexBuilder.getRegexForSplit().toString());
+                for (String earlyDiffText : earlyDiffTexts) {
+                    if (toBeRemoved.contains(earlyDiffText)) {
+                        diffFinalReport.add(new Diff(Operation.EQUAL, earlyDiffText));
+                    } else {
+                        diffFinalReport.add(new Diff(Operation.DELETE, earlyDiffText));
+                    }
+                }
+            } else {
+                diffFinalReport.add(new Diff(Operation.DELETE, qualidexBuilder.getTextInEarlierDiff()));
+            }
+        } catch (PatternSyntaxException e) {
+            e.printStackTrace();
+            logger.warning("Please give deleted string/newly added string");
         }
     }
 
@@ -882,10 +897,11 @@ public class QualidexLibrary {
         } else {
             List<String> baseString = new ArrayList<String>();
             Set<String> keys = diff.keySet();
-            for (String key : keys) {
+            keys.stream().map(baseString::add).forEach(System.out::println);
+           /* for (String key : keys) {
                 baseString.add(key);
                 System.out.println("key: " + key);
-            }
+            }*/
             baseString(baseString, loopCount, regexForSplitModified, diff);
             baseModifyValues(loopCount, regexForSplitModified, baseString, diff, diffFinalReport);
         }
@@ -935,7 +951,7 @@ public class QualidexLibrary {
             dmp.diff_cleanupEfficiency(pdfDifferences);
             for (int i = 0; i < pdfDifferences.size(); i++) {
                 qualidexBuilder.setPdfDiff(pdfDifferences.get(i));
-                System.out.println("Printing pdfDifferences: " + qualidexBuilder.getPdfDiff().text);
+                logger.info("Printing PDFContent: " + qualidexBuilder.getPdfDiff().operation.name() + ":" + qualidexBuilder.getPdfDiff().text);
                 switch (qualidexBuilder.getPdfDiff().operation) {
                     case EQUAL:
                         System.out.println(" ");
@@ -956,7 +972,6 @@ public class QualidexLibrary {
                                 break;
                             case DELETE:
                                 earlyDiffStateForDeleteInInsert(diff, diffFinalReport);
-                                diffFinalReport.add(new Diff(Operation.DELETE, qualidexBuilder.getTextInEarlierDiff()));
                                 break;
                             default:
                                 logger.info("EarlierDiffState operation is not matched");
@@ -969,6 +984,7 @@ public class QualidexLibrary {
                 }
                 qualidexBuilder.setTextInEarlierDiff(qualidexBuilder.getPdfDiff().text);
             }
+//            diffFinalReport.add(new Diff(Operation.DELETE, qualidexBuilder.getTextInEarlierDiff()));
             String result = dmp.diff_prettyHtml(diffFinalReport);
             Path path = Paths.get(".\\Difference.html");
             // with path , content & standard charsets
