@@ -1,6 +1,5 @@
 package test.java.test.qualidexJarTest;
 
-
 import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
 import org.testng.annotations.Test;
 
