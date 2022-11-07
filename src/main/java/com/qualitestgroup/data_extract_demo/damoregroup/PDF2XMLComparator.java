@@ -35,20 +35,19 @@ public class PDF2XMLComparator {
 	}
 
 	/**
-	 * @param xmlSource
+	 * @param pdfXml
 	 * @param xmlFilePath
 	 * @throws SAXException
 	 * @throws ParserConfigurationException
 	 * @throws IOException
 	 * Method to Parse the document content and convert it into XML file
 	 */
-	public static void stringToXML(String xmlSource, String xmlFilePath)
-			throws SAXException, ParserConfigurationException, IOException {
+	public void stringToXML(String pdfXml, String xmlFilePath) {
 		try {
 			// Parse the given input
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document doc1 = builder.parse(new InputSource(new StringReader(xmlSource)));
+			Document doc1 = builder.parse(new InputSource(new StringReader(pdfXml)));
 			// Write the parsed document to an XML file
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();

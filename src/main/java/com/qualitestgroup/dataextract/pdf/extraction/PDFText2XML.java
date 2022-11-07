@@ -24,7 +24,6 @@ import java.util.Set;
  */
 public class PDFText2XML extends PDFTextStripper {
     private static final int INITIAL_PDF_TO_XML_BYTES = 8192;
-
     private final PDFText2XML.FontState fontState = new PDFText2XML.FontState();
 
     /**
@@ -217,7 +216,7 @@ public class PDFText2XML extends PDFTextStripper {
 
             return buffer.toString();
         }
-        
+
         private int closeUntil(StringBuilder tagsBuilder, String endTag) {
             for (int i = stateList.size(); i-- > 0; ) {
                 String tag = stateList.get(i);

@@ -4,6 +4,7 @@ import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import name.fraser.neil.plaintext.diff_match_patch;
 import name.fraser.neil.plaintext.diff_match_patch.Diff;
 import name.fraser.neil.plaintext.diff_match_patch.Operation;
+import org.apache.logging.log4j.Level;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -36,6 +37,7 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Qualidex library
@@ -543,7 +545,7 @@ public class QualidexLibrary {
     public boolean findImage(String pdfImageDirectoryPath, String expectedImageDirectoryPath) {
         boolean result = false;
         Map<File, Boolean> imageResult = new HashMap<>();
-        String imageExportDir = ".\\Images\\" + getSystemTime("yyyy-dd-M HH-mm-ssSS") + "\\";
+        String imageExportDir = "Images\\" + getSystemTime("yyyy-dd-M HH-mm-ssSS");
         try {
             // Extract images from the PDF
             imageExtraction(pdfImageDirectoryPath, imageExportDir);
@@ -571,19 +573,19 @@ public class QualidexLibrary {
                         imageResult.put(expectedImage, false);
                     }
                 }
-                for (Map.Entry<File,Boolean> image : imageResult.entrySet()) {
-                    if (Boolean.TRUE.equals(image.getValue())) {
-                        logger.info("Image with name " + getNameFromPath(image.getKey().toString()) + " found in PDFImageDirectory: " + pdfImageDirectoryPath);
-                        result = true;
-                    } else {
-                        logger.info("Image with name " + getNameFromPath(image.getKey().toString()) + " not found in PDFImageDirectory: " + pdfImageDirectoryPath);
-                    }
+            }
+            for (Map.Entry<File, Boolean> image : imageResult.entrySet()) {
+                if (Boolean.TRUE.equals(image.getValue())) {
+                    logger.info("Image with name " + getNameFromPath(image.getKey().toString()) + " found in PDFImageDirectory: " + pdfImageDirectoryPath);
+                } else {
+                    logger.info("Image with name " + getNameFromPath(image.getKey().toString()) + " not found in PDFImageDirectory: " + pdfImageDirectoryPath);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+        return !imageResult.containsValue(false);
     }
 
     /**
@@ -594,12 +596,11 @@ public class QualidexLibrary {
      * @throws IOException
      */
     private void imageExtraction(String pdf, String imageExportDir) throws IOException {
-
         File theDir = new File(imageExportDir);
         if (!theDir.exists()) {
             theDir.mkdirs();
         }
-        PDDocument document = PDDocument.load(new File(PDF));
+        PDDocument document = PDDocument.load(new File(pdf));
         int NoOfPage = document.getNumberOfPages();
         for (int page = 0; page < NoOfPage; page++) {
             PDPage pdfpage = document.getPage(page);
@@ -608,7 +609,7 @@ public class QualidexLibrary {
             for (COSName c : pdResources.getXObjectNames()) {
                 PDXObject o = pdResources.getXObject(c);
                 if (o instanceof PDImageXObject) {
-                    File file = new File(".\\Images\\page_" + page + "_image_" + i + "_" + getSystemTime("yyyy-dd-M HH-mm-ssSS") + ".png");
+                    File file = new File(imageExportDir + "\\page_" + page + "_image_" + i + "_" + getSystemTime("yyyy-dd-M HH-mm-ssSS") + ".png");
                     i++;
                     ImageIO.write(((PDImageXObject) o).getImage(), "png", file);
                 }
@@ -657,36 +658,26 @@ public class QualidexLibrary {
      * @return Boolean true or false
      * @throws IOException
      */
-    private boolean processImage(File imageFiles, String refImage) throws IOException {
+    private boolean processImage(File imageFiles, String refImage) {
         boolean result = false;
-        String file1 = refImage;
-        String file2 = imageFiles.toString();
-        Image image1 = Toolkit.getDefaultToolkit().getImage(file1);
-        Image image2 = Toolkit.getDefaultToolkit().getImage(file2);
+        List<int[]> compareImage = new ArrayList<>();
+        List<String> files = Arrays.asList(refImage, imageFiles.toString());
         try {
-            PixelGrabber grab1 = new PixelGrabber(image1, 0, 0, -1, -1, false);
-            PixelGrabber grab2 = new PixelGrabber(image2, 0, 0, -1, -1, false);
-            int[] data1 = null;
-            if (grab1.grabPixels()) {
-                int width = grab1.getWidth();
-                int height = grab1.getHeight();
-                data1 = new int[width * height];
-                data1 = (int[]) grab1.getPixels();
+            for (int i = 0; i < files.size(); i++) {
+                Image image = Toolkit.getDefaultToolkit().getImage(files.get(i));
+                PixelGrabber imagePixel = new PixelGrabber(image, 0, 0, -1, -1, false);
+                if (imagePixel.grabPixels()) {
+                    compareImage.add((int[]) imagePixel.getPixels());
+                }
             }
-            int[] data2 = null;
-            if (grab2.grabPixels()) {
-                int width = grab2.getWidth();
-                int height = grab2.getHeight();
-                data2 = new int[width * height];
-                data2 = (int[]) grab2.getPixels();
+            if (compareImage.size() == files.size()) {
+                result = Arrays.equals(compareImage.get(0), compareImage.get(1));
             }
-            result = java.util.Arrays.equals(data1, data2);
-
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
+        } catch (InterruptedException e) {
+            logger.warning(e.getMessage());
+            e.printStackTrace();
         }
         return result;
-
     }
 
     /**
