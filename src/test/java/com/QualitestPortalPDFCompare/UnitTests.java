@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
+import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -110,7 +111,7 @@ public class UnitTests {
     public static String getConfigProperty(String keyword) {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("./Config/TestConfiguration.properties"));
+            properties.load(new FileInputStream("src/test/resources/config/TestConfiguration.properties"));
         } catch (FileNotFoundException e) {
             Reporter.log("File Not Found Exception thrown while getting value of " + keyword
                     + " from Test Configuration file");
@@ -274,4 +275,15 @@ public class UnitTests {
         return null;
     }
 
+    @Test
+    public void testFindText(){
+        String file1 = getConfigProperty("File1");
+        String value = "tortor quis";
+        QualidexLibrary qualidexLibrary = new QualidexLibrary();
+        Reporter.log("You are off to test FindText with value: " + value, true);
+        Reporter.log("this is the path of your file: " + file1, true);
+        qualidexLibrary.setPDFLocationAndExtract(file1);
+        qualidexLibrary.findText(value);
+
+    }
 }
