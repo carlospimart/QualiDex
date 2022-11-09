@@ -19,6 +19,7 @@ public class Unit_Test {
 //    private final String refImagePath1 = "src\\test\\resources\\image01Fail.png";
 //    private final String refImagePath2 = "src\\test\\resources\\image02.png";
     private final String refImageDir ="src\\test\\resources\\expectedimages";
+    private final String tablePdf ="src\\test\\resources\\table1.pdf";
 //    private final String value = "Versicherung";
 //    private final String formatText = "Angebot";
 //    private final String formatTextFontstyle = "LiberationSansNarrow-Bold";
@@ -168,6 +169,12 @@ public class Unit_Test {
         Reporter.log("Finding image in PDF");
         asserter.validateTrue(qualidexLibrary.findImage(pathOfPDFWithImages, refImageDir), "Image not found in the PDF");
       asserter.assertAll();
+    }
+
+    @Test
+    public void extractTable() {
+        qualidexLibrary.extractTableFromPdf(tablePdf,"Table Contents",
+                "src\\test\\resources\\", "ExtractTable");
     }
 
 }

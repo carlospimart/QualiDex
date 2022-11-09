@@ -4,8 +4,12 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.cos.COSName;
@@ -350,16 +354,16 @@ public class QualidexUtility {
             File sourceFile = new File(file);
             this.createImageDestinationDirectory(file);
             this.updateStartAndEndPages(file, startPage, endPage);
-
             String fileName = sourceFile.getName().replace(".pdf", "");
-
             PDDocument document = PDDocument.load(sourceFile);
             PDFRenderer pdfRenderer = new PDFRenderer(document);
             for (int iPage = this.startPage - 1; iPage < this.endPage; iPage++) {
                 logger.info("Page No : " + (iPage + 1));
-                String fname = this.imageDestinationPath + fileName + "_" + (iPage + 1) + ".png";
+                String fname = this.imageDestinationPath  + fileName + "_" + (iPage + 1) + ".png";
                 BufferedImage image = pdfRenderer.renderImageWithDPI(iPage, 300, ImageType.RGB);
+                TimeUnit.SECONDS.sleep(2);
                 ImageIOUtil.writeImage(image, fname, 300);
+                TimeUnit.SECONDS.sleep(2);
                 imgNames.add(fname);
                 logger.info("PDf Page saved as image : " + fname);
             }
@@ -537,15 +541,26 @@ public class QualidexUtility {
     private void createImageDestinationDirectory(String file) throws IOException {
         if (null == this.imageDestinationPath) {
             File sourceFile = new File(file);
-            String destinationDir = sourceFile.getParent() + "/temp/";
+            String destinationDir = sourceFile.getParent() + "\\pdf_images\\";
             this.imageDestinationPath = destinationDir;
             this.createFolder(destinationDir);
         }
     }
 
-    private boolean createFolder(String dir) throws IOException {
-        FileUtils.deleteDirectory(new File(dir));
-        return new File(dir).mkdir();
+    private void createFolder(String dir) throws IOException {
+        File file = new File(dir);
+        if(file.exists()) {
+            FileUtils.cleanDirectory(file);
+            FileUtils.forceDelete(file);
+        }
+        FileUtils.forceMkdir(file);
+    }
+
+    /**
+     * Current time in HHmmssSSS
+     */
+    public String getSystemTime(String pattern) {
+        return (new SimpleDateFormat(pattern).format(new Date()));
     }
 
     private String getFileName(String file) {

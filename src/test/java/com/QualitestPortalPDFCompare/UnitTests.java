@@ -33,7 +33,7 @@ import main.java.com.qualitestgroup.dataextract.utilities.ComparisonMode;
 import main.java.com.qualitestgroup.dataextract.utilities.QualidexUtility;
 
 
-public class UnitTests {
+public class UnitTests extends BaseImageExtraction{
 
     private static final Log LOG = LogFactory.getLog(UnitTests.class);
     private final static Logger logger = Logger.getLogger(PDF2XMLComparator.class.getName());
@@ -163,7 +163,7 @@ public class UnitTests {
             String file2Name = str2[str2.length - 1];
             String[] file2updatedName = file2Name.split("\\.");
 
-            double diffinPerecentage = BaseImageExtraction.imageCompare(
+            double diffinPerecentage = imageCompare(
                     "Extract_Images\\" + file1updatedName[0] + "_" + i + ".png",
                     "Extract_Images\\" + file2updatedName[0] + "_" + i + ".png");
 
@@ -176,7 +176,7 @@ public class UnitTests {
                             .read(new File("Extract_Images\\" + file2updatedName[0] + "_" + i + ".png"));
 
                     //Base Image Compare
-                    joinedImg = BaseImageExtraction.compareWithBaseImage(img2, img1);
+                    joinedImg = compareWithBaseImage(img2, img1);
 
                     String filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
                             + file2updatedName[0] + i + "_ImageCompare.png";
@@ -187,7 +187,7 @@ public class UnitTests {
                             .read(new File("Extract_Images\\" + file1updatedName[0] + "_"
                                     + file2updatedName[0] + i + "_ImageCompare.png"));
 
-                    joinedImg = BaseImageExtraction.joinBufferedImage(img1, img2);
+                    joinedImg = joinBufferedImage(img1, img2);
 
                     filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
                             + file2updatedName[0] + i + ".png";
@@ -203,7 +203,7 @@ public class UnitTests {
                     BufferedImage img2 = ImageIO
                             .read(new File("Extract_Images\\" + file2updatedName[0] + "_" + i + ".png"));
 
-                    BufferedImage joinedImg = BaseImageExtraction.compareWithBaseImage(img1, img2);
+                    BufferedImage joinedImg = compareWithBaseImage(img1, img2);
 
                     String filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
                             + file2updatedName[0] + i + ".png";

@@ -3,7 +3,6 @@ package test.java.com.qualitestgroup.qualidexexcelutility;
 import main.java.com.qualitestgroup.data_extract_demo.damoregroup.Asserter;
 import main.java.com.qualitestgroup.dataextract.library.QualidexLibrary;
 import org.testng.Reporter;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -21,55 +20,49 @@ public class Unit_Test2 {
     private final String formatTextFontstyle = "LiberationSansNarrow-Bold";
     private final String formatTextFontSize = "14";
     private static String sheet = "Sheet3";
-    private  String sheetName = "Sheet3";
-   // private  int cellNumber = 1;
-    private String columnWanted = "Test content";
+    private String sheetName = "Sheet1";
+    private int columnIndex = 1;
     private static String filterCellValue = "Test2";
     private static int filterColumnNumber = 0;
     private static int filterCellNumber = 1;
-    public QualidexLibrary qualidexLibrary;
+    public final QualidexLibrary qualidexLibrary = new QualidexLibrary();
     private final Asserter asserter = new Asserter();
 
-    @BeforeClass
-    public void initialConfig() {
-        // logger.info("Check is PDF consits of text")
-        try {
-            Reporter.log("Check is PDF consits of text");
-            if (qualidexLibrary.isPdfEmpty(PDF2)) {
-                Reporter.log("Pdf consits of text");
-            } else {
-                Reporter.log("Pdf doesn't consits of text");
-            }
+    /*  @BeforeClass
+      public void initialConfig() {
+          // logger.info("Check is PDF consits of text")
+          try {
+              Reporter.log("Check is PDF consits of text");
+              if (qualidexLibrary.isPdfEmpty(PDF2)) {
+                  Reporter.log("Pdf consits of text");
+              } else {
+                  Reporter.log("Pdf doesn't consits of text");
+              }
 
-            Reporter.log("Check number of pages in PDF");
-            qualidexLibrary.returnNumberOfPages(PDF2);
+              Reporter.log("Check number of pages in PDF");
+              qualidexLibrary.returnNumberOfPages(PDF2);
 
-            Reporter.log("Set PDF and extract content");
-            qualidexLibrary.setPDFLocationAndExtract(PDF2);
-            Reporter.log("PDF contentent extracted successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+              Reporter.log("Set PDF and extract content");
+              qualidexLibrary.setPDFLocationAndExtract(PDF2);
+              Reporter.log("PDF contentent extracted successfully");
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
 
-    }
-
+      }
+  */
     @Test
     public void qualidexLibraryTest1() {
-
         try {
-            Reporter.log("Set Excel location");
-//			qualidexLibrary.setExcelLocation(ExcelPath);
             Reporter.log("Excel location has been set and start finding excel data in PDF");
-
-            // List<>
-            List<String> validationValues = qualidexLibrary.readCellValues(ExcelPath, sheetName, columnWanted);
+            List<String> validationValues = qualidexLibrary.readCellValues(ExcelPath, sheetName, columnIndex);
             for (String values : validationValues) {
                 Reporter.log("Validation Text : " + values);
-                if (qualidexLibrary.findValuesInPdf(values)) {
-                    asserter.validateTrue(qualidexLibrary.findValuesInPdf(values), values + " is present in the PDF");
+                if (qualidexLibrary.findText(values)) {
+                    asserter.validateTrue(qualidexLibrary.findText(values), values + " is present in the PDF");
                     Reporter.log(values + " is present in the PDF");
                 } else {
-                    asserter.validateTrue(qualidexLibrary.findValuesInPdf(values), values + " is not present in the PDF");
+                    asserter.validateTrue(qualidexLibrary.findText(values), values + " is not present in the PDF");
                     Reporter.log(values + " is not present in the PDF");
                 }
 
@@ -93,14 +86,14 @@ public class Unit_Test2 {
             for (String values : validationValuess) {
                 Reporter.log("Validation Text : " + values);
 
-                if (qualidexLibrary.findValuesInPdf(values)) {
+                if (qualidexLibrary.findText(values)) {
 
-                    asserter.validateTrue(qualidexLibrary.findValuesInPdf(values), values + " is present in the PDF");
+                    asserter.validateTrue(qualidexLibrary.findText(values), values + " is present in the PDF");
                     Reporter.log(values + " is present in the PDF");
 
                 } else {
 
-                    asserter.validateTrue(qualidexLibrary.findValuesInPdf(values), values + " is not present in the PDF");
+                    asserter.validateTrue(qualidexLibrary.findText(values), values + " is not present in the PDF");
                     Reporter.log(values + " is not present in the PDF");
                 }
 
@@ -185,24 +178,6 @@ public class Unit_Test2 {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        asserter.assertAll();
-    }
-
-    @Test
-    public void qualidexImageTest() {
-        // qualidexLibrary.findText("Header");
-        Reporter.log("Finding image in PDF");
-
-        if (qualidexLibrary.findImage(PDFwithImages, refImage) == true) {
-
-            asserter.validateTrue(qualidexLibrary.findImage(PDFwithImages, refImage), "Image found in the PDF");
-            Reporter.log("Image found in the PDF");
-
-        } else {
-
-            asserter.validateTrue(qualidexLibrary.findImage(PDFwithImages, refImage), "Image not found in the PDF");
-            Reporter.log("Image not found in the PDF");
         }
         asserter.assertAll();
     }
