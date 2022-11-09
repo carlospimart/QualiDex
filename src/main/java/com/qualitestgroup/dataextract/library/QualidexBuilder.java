@@ -7,6 +7,8 @@ import name.fraser.neil.plaintext.diff_match_patch;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 @Getter
 @Setter
@@ -28,4 +30,7 @@ public class QualidexBuilder {
     private diff_match_patch.Diff pdfDiff;
     @Builder.Default
     private StringBuilder regexForSplit = new StringBuilder("(");
+    @Builder.Default
+    private XSSFWorkbook myWorkBook = new XSSFWorkbook();
+    private XSSFRow rowhead;
 }

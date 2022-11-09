@@ -31,7 +31,6 @@ public class PdfCompare extends BaseImageExtraction {
 
     private PDFOpener opener;
     private PDFText2XML text2XML;
-    //public PDF2XMLComparator xmlComparator = new PDF2XMLComparator();
     public static String strEncodeXML = "encoding=\"UTF-8\" ";
     public PDDocument pdf1 = null;
     public PDDocument pdf2 = null;
@@ -41,9 +40,12 @@ public class PdfCompare extends BaseImageExtraction {
     public String firstXmlDoc = getConfigProperty("firstXmlDocFile");
     public String secondXmlDoc = getConfigProperty("secondXmlDocFile");
     private DecimalFormat df2 = new DecimalFormat("#.##");
+    private final String pdfFilePath = getConfigProperty("pdfFilePath");
     private final String file1 = getConfigProperty("File1");
     private final String file2 = getConfigProperty("File2");
+    private final String imagePath = pdfFilePath + "pdf_images\\";
     private final Asserter asserter = new Asserter();
+    private final QualidexUtility util = new QualidexUtility();
     private PDF2XMLComparator pdf2XMLComparator;
 
     public PdfCompare() throws IOException {
@@ -75,23 +77,6 @@ public class PdfCompare extends BaseImageExtraction {
         }
     }
 
-    public void loadPDFContentToDoc(String strDoc1, String strDoc2) {
-        try {
-            Reporter.log("Load PDF content from First file " + strDoc1, true);
-            pdf1 = opener.openDocument(strDoc1);
-            Reporter.log("Loaded PDF content from First file " + strDoc1 + " Successfully", true);
-            logger.info("Number of pages of First PDF file is -> " + pdf1.getNumberOfPages());
-            Reporter.log("Load PDF content from Second file " + strDoc2, true);
-            pdf2 = opener.openDocument(strDoc2);
-            Reporter.log("Loaded PDF content from Second file " + strDoc2 + " Successfully", true);
-            logger.info("Number of pages of Second PDF file is -> " + pdf2.getNumberOfPages());
-        } catch (Exception e) {
-            logger.info("Exception caught in loadPDFContentToDoc()  " + e.getMessage());
-            LOG.error(" Exception caught while loading PDF files data to document");
-        }
-    }
-
-
     /**
      * Method to Fetch the data and convert it XML format
      */
@@ -122,17 +107,18 @@ public class PdfCompare extends BaseImageExtraction {
             logger.info("Exception caught in fetchDataAndConvertToXML()  " + e.getMessage());
             LOG.error(" Exception caught while fetching data from document file and converting it to XML");
         }
-
     }
 
 
-    public void verifyNumberOfPagesEqualInPdf() {
+    public boolean verifyNumberOfPagesEqualInPdf() {
         try {
             asserter.validateTrue(pdf1.getNumberOfPages() == pdf2.getNumberOfPages(), "Pages count mismatches, First file "
                     + " pages are " + pdf1.getNumberOfPages() + " and second files pages are " + pdf2.getNumberOfPages());
+
         } catch (Exception e) {
             logger.info("Exception caught in verifyNumberOfPages()  " + e.getMessage());
         }
+        return pdf1.getNumberOfPages() == pdf2.getNumberOfPages();
     }
 
     /**
@@ -309,107 +295,70 @@ public class PdfCompare extends BaseImageExtraction {
      * true); Asserter.validateAssert.assertAll(); }
      */
     @Test
-    public void Compare() throws IOException {
-
-        Reporter.log("Load PDF content from First file " + file1.trim(), true);
-        Reporter.log("Loaded PDF content from First file " + file1.trim() + " Successfully", true);
-        Reporter.log("Load PDF content from Second file " + file2.trim(), true);
-        Reporter.log("Loaded PDF content from Second file " + file2.trim() + " Successfully", true);
-
-        loadPDFContentToDoc1(file1.trim(), file2.trim());
-
-        Reporter.log("Verify number of pages are same", true);
-        verifyNumberOfPagesEqualInPdf();
-        Reporter.log("Verified!! Number of pages are same", true);
-
-        Reporter.log("Fetching data from PDF files", true);
-
+    public void compare() throws IOException {
+        String filePath;
+        Reporter.log("Load PDF content from First file " + pdfFilePath + file1.trim(), true);
+        Reporter.log("Loaded PDF content from First file " + pdfFilePath + file1.trim() + " Successfully", true);
+        Reporter.log("Load PDF content from Second file " + pdfFilePath + file2.trim(), true);
+        Reporter.log("Loaded PDF content from Second file " + pdfFilePath + file2.trim() + " Successfully", true);
+        loadPDFContentToDoc1(pdfFilePath + file1.trim(), pdfFilePath + file2.trim());
+        Reporter.log("Verified! both pdf file pages are same", verifyNumberOfPagesEqualInPdf());
+       /* Reporter.log("Fetching data from PDF files", true);
         fetchDataAndConvertToXML1();
-
         Reporter.log("Fetched data from PDF files", true);
-
         Reporter.log("Verify PDF data Content", true);
-        //PDF2XMLComparator.validatePDFFileData(firstXmlDoc, secondXmlDoc);
-        Reporter.log("Verified PDF data Content", true);
-        QualidexUtility util = new QualidexUtility();
-        Reporter.log("Compare extracted image with reference image", true);
-//		util.setImageDestinationPath(".Extract_Images\\");
-        util.savePdfAsImage("src\\test\\resources\\sourcepdfforimageconversion" + file1.trim());
-        util.savePdfAsImage("src\\test\\resources\\sourcepdfforimageconversion" + file2.trim());
-
-        int file1PageCount = util.getPageCount("src\\test\\resources\\" + file1.trim());
-
+        Reporter.log("Verified PDF data Content", true);*/
+        Reporter.log("Comparing file1 pdf image with file2 pdf image", true);
+        util.savePdfAsImage(pdfFilePath + file1.trim());
+        util.savePdfAsImage(pdfFilePath + file2.trim());
+        int file1PageCount = util.getPageCount(pdfFilePath + file1.trim());
+        String[] file1Pdf = file1.trim().split("\\.");
+        String[] file2Pdf = file2.trim().split("\\.");
         for (int i = 1; i <= file1PageCount; i++) {
-
-            String file1Name = file1.trim();
-            String[] file1updatedName = file1Name.split("\\.");
-            String file2Name = file2.trim();
-            String[] file2updatedName = file2Name.split("\\.");
-
-            double diffinPerecentage = BaseImageExtraction.imageCompare(
-                    "Extract_Images\\" + file1updatedName[0] + "_" + i + ".png",
-                    "Extract_Images\\" + file2updatedName[0] + "_" + i + ".png");
+            double diffinPerecentage = imageCompare(
+                    imagePath + file1Pdf[0] + "_" + i + ".png",
+                    imagePath + file2Pdf[0] + "_" + i + ".png");
 
             if (diffinPerecentage != 0.0) {
                 if (diffinPerecentage > 0.0) {
                     BufferedImage img1, img2, joinedImg;
                     img1 = ImageIO
-                            .read(new File("Extract_Images\\" + file1updatedName[0] + "_" + i + ".png"));
+                            .read(new File(imagePath + file1Pdf[0] + "_" + i + ".png"));
                     img2 = ImageIO
-                            .read(new File("Extract_Images\\" + file2updatedName[0] + "_" + i + ".png"));
-
+                            .read(new File(imagePath + file2Pdf[0] + "_" + i + ".png"));
                     //Base Image Compare
                     joinedImg = compareWithBaseImage(img2, img1);
-
-                    String filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
-                            + file2updatedName[0] + i + ".png";
-
+                    filePath = imagePath + file1Pdf[0] + "_"
+                            + file2Pdf[0] + "_" + i + ".png";
                     ImageIO.write(joinedImg, "png", new File(filePath));
-
                     img2 = ImageIO
-                            .read(new File("Extract_Images\\" + file1updatedName[0] + "_"
-                                    + file2updatedName[0] + i + ".png"));
-
-                    joinedImg = main.java.com.qualitestgroup.dataextract.imagecomp.BaseImageExtraction.joinBufferedImage(img1, img2);
-
-                    filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0] + "_"
-                            + file2updatedName[0] + i + ".png";
+                            .read(new File(imagePath + file1Pdf[0] + "_"
+                                    + file2Pdf[0] + i + ".png"));
+                    joinedImg = joinBufferedImage(img1, img2);
+//                    filePath = imagePath + file1Pdf[0] + "_"
+//                            + file2Pdf[0] + i + ".png";
                     ImageIO.write(joinedImg, "png", new File(filePath));
                     asserter.validateTrue(diffinPerecentage == 0.0,
                             "PDF data differs with " + df2.format(diffinPerecentage) + "%" + " & for reference "
                                     + "<a href=" + filePath + ">link</a>");
                 } else {
-
                     BufferedImage img1 = ImageIO
-                            .read(new File("Extract_Images\\" + file1updatedName[0] + "_" + i + ".png"));
+                            .read(new File(imagePath + file1Pdf[0] + "_" + i + ".png"));
                     BufferedImage img2 = ImageIO
-                            .read(new File("Extract_Images\\" + file2updatedName[0] + "_" + i + ".png"));
-
+                            .read(new File(imagePath + file2Pdf[0] + "_" + i + ".png"));
                     BufferedImage joinedImg = compareWithBaseImage(img1, img2);
-
-                    String filePath = System.getProperty("user.dir") + "\\Extract_Images\\" + file1updatedName[0]
-                            + "_" + file2updatedName[0] + i + ".png";
+                    filePath = imagePath + file1Pdf[0]
+                            + "_" + file2Pdf[0] + "_" + i + ".png";
                     ImageIO.write(joinedImg, "png", new File(filePath));
                     asserter.validateTrue(diffinPerecentage == 0.0, "PDF data differs with "
                             + df2.format(diffinPerecentage) + "%" + " & for reference " + "<a href=" + filePath + ">link</a>");
                     break;
-
                 }
             }
+            if (diffinPerecentage == 0 && verifyNumberOfPagesEqualInPdf()) {
+                Reporter.log("Compared both " + file1Pdf[0] + " and " + file2Pdf[0] + " images are same", true);
+            }
         }
-        Reporter.log("Compared extracted image with reference image successfully", true);
-
         asserter.assertAll();
     }
-
-
-    /*
-     * @Test public void TextChangesFile() throws Exception { compareTwoFiles();
-     * Asserter.validateAssert.assertAll();
-     *
-     *
-     * }
-     */
-
-
 }
